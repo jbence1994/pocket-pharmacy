@@ -6,5 +6,6 @@ namespace PocketPharmacy.Core
     public interface IMedicineRepository
     {
         IEnumerable<Medicine> GetMedicines();
+        Medicine GetMedicine(int id);
     }
 }

@@ -13,7 +13,6 @@ namespace PocketPharmacy.Persistence.Mocks
         {
             _medicines = new List<Medicine>
             {
-
                 new Medicine
                 {
                     Id = 1,
@@ -29,6 +28,22 @@ namespace PocketPharmacy.Persistence.Mocks
                         Amount = 2,
                         Unit = "pills"
                     }
+                },
+                new Medicine
+                {
+                    Id = 2,
+                    Name = "Magic Potion For Everything",
+                    Description = "...",
+                    Amount = 300,
+                    Unit = "mg",
+                    ExpirationDate = new DateTime(2021, 01, 01),
+                    NeedPrescription = false,
+                    Dosage = new Dosage
+                    {
+                        PerDays = 2,
+                        Amount = 3,
+                        Unit = "mg"
+                    }
                 }
             };
         }
@@ -36,6 +51,11 @@ namespace PocketPharmacy.Persistence.Mocks
         public IEnumerable<Medicine> GetMedicines()
         {
             return _medicines;
+        }
+
+        public Medicine GetMedicine(int id)
+        {
+            return _medicines.Find(medicine => medicine.Id == id);
         }
     }
 }
