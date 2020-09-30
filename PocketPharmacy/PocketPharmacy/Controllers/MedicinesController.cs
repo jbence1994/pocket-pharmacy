@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using PocketPharmacy.Core;
+using PocketPharmacy.Core.Models;
+using PocketPharmacy.Persistence.Mocks;
 
 namespace PocketPharmacy.Controllers
 {
@@ -7,11 +10,18 @@ namespace PocketPharmacy.Controllers
     [ApiController]
     public class MedicinesController : ControllerBase
     {
+        private readonly IMedicineRepository _medicineRepository;
+
+        public MedicinesController()
+        {
+            _medicineRepository = new FakeMedicineRepository();
+        }
+
         // GET: api/<MedicinesController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Medicine> Get()
         {
-            return new string[] {"value1", "value2"};
+            return _medicineRepository.GetMedicines();
         }
 
         // GET api/<MedicinesController>/5
