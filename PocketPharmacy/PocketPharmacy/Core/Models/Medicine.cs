@@ -20,7 +20,7 @@ namespace PocketPharmacy.Core.Models
 
         public bool IsExpired()
         {
-            return false;
+            return DateTime.Now > ExpirationDate;
         }
 
         public bool HasWeeklyDosage()
