@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PocketPharmacy.Core;
 using PocketPharmacy.Core.Models;
-using PocketPharmacy.Persistence.Mocks;
 
 namespace PocketPharmacy.Controllers
 {
@@ -12,9 +11,9 @@ namespace PocketPharmacy.Controllers
     {
         private readonly IMedicineRepository _medicineRepository;
 
-        public MedicinesController()
+        public MedicinesController(IMedicineRepository medicineRepository)
         {
-            _medicineRepository = new FakeMedicineRepository();
+            _medicineRepository = medicineRepository;
         }
 
         // GET: api/<MedicinesController>
