@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using PocketPharmacy.Core;
 using PocketPharmacy.Core.Models;
+using PocketPharmacy.Core.Repositories;
 
 namespace PocketPharmacy.Persistence.Mocks
 {

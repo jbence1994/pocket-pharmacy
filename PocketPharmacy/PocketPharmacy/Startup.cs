@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PocketPharmacy.Core;
+using PocketPharmacy.Core.Repositories;
 using PocketPharmacy.Persistence.Mocks;
 
 namespace PocketPharmacy
@@ -20,6 +20,7 @@ namespace PocketPharmacy
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IMedicineRepository, FakeMedicineRepository>();
+            services.AddScoped<IUserRepository, FakeUserRepository>();
 
             services.AddControllers();
         }

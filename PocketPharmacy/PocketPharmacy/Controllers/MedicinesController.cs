@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using PocketPharmacy.Core;
 using PocketPharmacy.Core.Models;
+using PocketPharmacy.Core.Repositories;
 
 namespace PocketPharmacy.Controllers
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using PocketPharmacy.Core.Models;
 
-namespace PocketPharmacy.Core
+namespace PocketPharmacy.Core.Repositories
 {
     public interface IMedicineRepository
     {
