@@ -4,13 +4,13 @@ using PocketPharmacy.Core.Models;
 
 namespace PocketPharmacyTests.Core.Models
 {
-    [TestClass()]
+    [TestClass]
     public class MedicineTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void IsExpiredTest_IsExpired_ShouldBeExpired()
         {
-            //Arrange
+            // Arrange
             var dosage = new Dosage
             {
                 PerDays = 1,
@@ -37,10 +37,10 @@ namespace PocketPharmacyTests.Core.Models
             Assert.AreEqual(true, actual, "Test fails when medicine is expired.");
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void IsExpiredTest_IsExpired_ShouldNotBeExpired()
         {
-            //Arrange
+            // Arrange
             var dosage = new Dosage
             {
                 PerDays = 1,
