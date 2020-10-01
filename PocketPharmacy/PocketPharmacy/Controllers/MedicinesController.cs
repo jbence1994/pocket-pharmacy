@@ -16,33 +16,33 @@ namespace PocketPharmacy.Controllers
             _medicineRepository = medicineRepository;
         }
 
-        // GET: api/<MedicinesController>
+        // GET: api/medicines
         [HttpGet]
         public IEnumerable<Medicine> Get()
         {
             return _medicineRepository.GetMedicines();
         }
 
-        // GET api/<MedicinesController>/5
+        // GET: api/medicines/5
         [HttpGet("{id}")]
         public Medicine Get(int id)
         {
             return _medicineRepository.GetMedicine(id);
         }
 
-        // POST api/<MedicinesController>
+        // POST: api/medicines
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<MedicinesController>/5
+        // PUT: api/medicines
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<MedicinesController>/5
+        // DELETE: api/medicines/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
