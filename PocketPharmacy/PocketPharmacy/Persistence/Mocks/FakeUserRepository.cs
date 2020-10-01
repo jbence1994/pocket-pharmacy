@@ -18,14 +18,12 @@ namespace PocketPharmacy.Persistence.Mocks
                     Username = "jbence",
                     Password = "12345"
                 },
-
                 new User
                 {
                     Id = 2,
                     Username = "lnoemi",
                     Password = "12345"
                 },
-
                 new User
                 {
                     Id = 3,
