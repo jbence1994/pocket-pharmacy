@@ -19,6 +19,8 @@ namespace PocketPharmacy
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()); });
+
             services.AddScoped<IMedicineRepository, FakeMedicineRepository>();
             services.AddScoped<IUserRepository, FakeUserRepository>();
 
@@ -33,6 +35,8 @@ namespace PocketPharmacy
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(options => options.AllowAnyOrigin());
 
             app.UseAuthorization();
 

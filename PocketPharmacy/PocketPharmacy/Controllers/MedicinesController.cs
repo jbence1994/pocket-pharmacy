@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PocketPharmacy.Core.Models;
 using PocketPharmacy.Core.Repositories;
 
 namespace PocketPharmacy.Controllers
 {
+    [EnableCors("AllowOrigin")]
     [Route("api/[controller]")]
     [ApiController]
     public class MedicinesController : ControllerBase
