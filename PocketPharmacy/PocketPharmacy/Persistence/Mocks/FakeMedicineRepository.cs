@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using PocketPharmacy.Core.Models;
 using PocketPharmacy.Core.Repositories;
 
@@ -55,12 +56,25 @@ namespace PocketPharmacy.Persistence.Mocks
 
         public Medicine GetMedicine(int id)
         {
-            return _medicines.Find(medicine => medicine.Id == id);
+            var medicine = _medicines.SingleOrDefault(m => m.Id == id);
+
+            if (medicine == null)
+                throw new Exception("Nem létező gyógyszer.");
+
+            return medicine;
         }
 
         public Dosage GetDosage(int medicineId)
         {
-            return _medicines.Find(medicine => medicine.Id == medicineId).Dosage;
+            try
+            {
+                var medicine = GetMedicine(medicineId);
+                return medicine.Dosage;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

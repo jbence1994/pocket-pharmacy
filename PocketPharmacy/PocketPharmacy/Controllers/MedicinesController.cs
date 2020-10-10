@@ -29,24 +29,28 @@ namespace PocketPharmacy.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var medicine = _medicineRepository.GetMedicine(id);
-
-            if (medicine != null)
+            try
+            {
                 return Ok(_medicineRepository.GetMedicine(id));
-
-            return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // GET: api/medicines/5/dosage
         [HttpGet("{id}/dosage")]
         public IActionResult GetMedicineDosage(int id)
         {
-            var medicine = _medicineRepository.GetMedicine(id);
-
-            if (medicine != null)
+            try
+            {
                 return Ok(_medicineRepository.GetDosage(medicineId: id));
-
-            return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // POST: api/medicines
