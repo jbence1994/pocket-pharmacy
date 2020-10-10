@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Cors;
+﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PocketPharmacy.Core.Models;
 using PocketPharmacy.Core.Repositories;
@@ -25,14 +24,14 @@ namespace PocketPharmacy.Controllers
             return Ok(_userRepository.GetUsers());
         }
 
-
-        [HttpGet("{userId}/stocks")]
-        public IActionResult GetStocks(int userId)
+        // GET: api/users/5/stocks
+        [HttpGet("{id}/stocks")]
+        public IActionResult GetStocks(int id)
         {
-            var user = _userRepository.GetUser(userId);
+            var user = _userRepository.GetUser(id);
 
             if (user != null)
-                return Ok(_userRepository.GetStocks(userId));
+                return Ok(_userRepository.GetStocks(userId: id));
 
             return BadRequest();
         }
