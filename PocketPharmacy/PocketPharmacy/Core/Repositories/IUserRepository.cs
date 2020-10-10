@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using PocketPharmacy.Core.Models;
+﻿using PocketPharmacy.Core.Models;
 
 namespace PocketPharmacy.Core.Repositories
 {
     public interface IUserRepository
     {
-        IEnumerable<User> GetUsers();
-        User GetUser(int id);
-        IEnumerable<Medicine> GetMedicines(int userId);
+        void AddUser(User user);
     }
 }

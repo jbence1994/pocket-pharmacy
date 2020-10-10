@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using PocketPharmacy.Core.Models;
 using PocketPharmacy.Core.Repositories;
 
@@ -35,25 +33,9 @@ namespace PocketPharmacy.Persistence.Mocks
             };
         }
 
-        public IEnumerable<User> GetUsers()
+        public void AddUser(User user)
         {
-            return _users;
-        }
-
-        public User GetUser(int id)
-        {
-            var user = _users.SingleOrDefault(u => u.Id == id);
-
-            if (user == null)
-                throw new Exception("Nem létező felhasználó.");
-
-            return user;
-        }
-
-        public IEnumerable<Medicine> GetMedicines(int userId)
-        {
-            var user = GetUser(userId);
-            return user.Medicines;
+            _users.Add(user);
         }
     }
 }
