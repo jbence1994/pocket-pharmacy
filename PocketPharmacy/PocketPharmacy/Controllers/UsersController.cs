@@ -18,58 +18,9 @@ namespace PocketPharmacy.Controllers
             _userRepository = userRepository;
         }
 
-        // GET: api/users
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok(_userRepository.GetUsers());
-        }
-
-        // GET: api/users/5
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
-        {
-            try
-            {
-                return Ok(_userRepository.GetUser(id));
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
-        }
-
-        // GET: api/users/5/stocks
-        [HttpGet("{id}/medicines")]
-        public IActionResult GetMedicines(int id)
-        {
-            try
-            {
-                return Ok(_userRepository.GetMedicines(userId: id));
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
-        }
-
         // POST: api/users
         [HttpPost]
         public IActionResult Post([FromBody] User user)
-        {
-            throw new NotImplementedException();
-        }
-
-        // PUT: api/users/5
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] User user)
-        {
-            throw new NotImplementedException();
-        }
-
-        // DELETE: api/users/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
         {
             throw new NotImplementedException();
         }
