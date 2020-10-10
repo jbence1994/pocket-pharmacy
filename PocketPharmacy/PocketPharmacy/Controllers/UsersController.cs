@@ -40,12 +40,12 @@ namespace PocketPharmacy.Controllers
         }
 
         // GET: api/users/5/stocks
-        [HttpGet("{id}/stocks")]
-        public IActionResult GetStocks(int id)
+        [HttpGet("{id}/medicines")]
+        public IActionResult GetMedicines(int id)
         {
             try
             {
-                return Ok(_userRepository.GetStocks(userId: id));
+                return Ok(_userRepository.GetMedicines(userId: id));
             }
             catch (Exception ex)
             {

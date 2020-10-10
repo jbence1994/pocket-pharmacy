@@ -11,7 +11,9 @@ namespace PocketPharmacy.Core.Models
         public string Unit { get; set; }
         public DateTime ExpirationDate { get; set; }
         public bool NeedPrescription { get; set; }
+        public int DosageId { get; set; }
         public Dosage Dosage { get; set; }
+        public int Quantity { get; set; }
 
         public double GetWeeklyDosage()
         {

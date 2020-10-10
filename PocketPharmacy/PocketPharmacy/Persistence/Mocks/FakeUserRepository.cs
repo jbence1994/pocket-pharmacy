@@ -50,10 +50,10 @@ namespace PocketPharmacy.Persistence.Mocks
             return user;
         }
 
-        public IEnumerable<Stock> GetStocks(int userId)
+        public IEnumerable<Medicine> GetMedicines(int userId)
         {
             var user = GetUser(userId);
-            return user.Stocks;
+            return user.Medicines;
         }
     }
 }

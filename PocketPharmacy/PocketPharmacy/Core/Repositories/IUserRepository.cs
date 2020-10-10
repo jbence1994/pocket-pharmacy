@@ -7,6 +7,6 @@ namespace PocketPharmacy.Core.Repositories
     {
         IEnumerable<User> GetUsers();
         User GetUser(int id);
-        IEnumerable<Stock> GetStocks(int userId);
+        IEnumerable<Medicine> GetMedicines(int userId);
     }
 }

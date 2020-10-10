@@ -7,11 +7,11 @@ namespace PocketPharmacy.Core.Models
         public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public IList<Stock> Stocks { get; set; }
+        public IList<Medicine> Medicines { get; set; }
 
         public User()
         {
-            Stocks = new List<Stock>();
+            Medicines = new List<Medicine>();
         }
     }
 }
