@@ -2,6 +2,7 @@
 using PocketPharmacy.Core.Models;
 using PocketPharmacy.Core.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PocketPharmacy.Persistence.Mocks
 {
@@ -47,7 +48,12 @@ namespace PocketPharmacy.Persistence.Mocks
 
         public Stock GetStock(int id)
         {
-            return _stocks.Find(stock => stock.Id == id);
+            var stock = _stocks.SingleOrDefault(s => s.Id == id);
+
+            if (stock == null)
+                throw new Exception("Nem létező raktár.");
+
+            return stock;
         }
     }
 }

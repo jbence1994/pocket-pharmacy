@@ -29,12 +29,14 @@ namespace PocketPharmacy.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var stock = _stockRepository.GetStock(id);
-
-            if (stock != null)
+            try
+            {
                 return Ok(_stockRepository.GetStock(id));
-
-            return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // POST api/stocks
