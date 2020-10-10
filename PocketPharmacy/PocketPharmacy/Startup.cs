@@ -22,6 +22,7 @@ namespace PocketPharmacy
             services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()); });
 
             services.AddScoped<IMedicineRepository, FakeMedicineRepository>();
+            services.AddScoped<IStockRepository, FakeStockRepository>();
             services.AddScoped<IUserRepository, FakeUserRepository>();
 
             services.AddControllers();

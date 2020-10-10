@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using PocketPharmacy.Core.Models;
 using PocketPharmacy.Core.Repositories;
 
@@ -41,6 +43,11 @@ namespace PocketPharmacy.Persistence.Mocks
         public User GetUser(int id)
         {
             return _users.Find(user => user.Id == id);
+        }
+
+        public IEnumerable<Stock> GetStocks(int userId)
+        {
+            return _users.Find(u => u.Id == userId).Stocks;
         }
     }
 }

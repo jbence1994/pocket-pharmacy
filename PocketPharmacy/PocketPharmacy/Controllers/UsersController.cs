@@ -20,9 +20,21 @@ namespace PocketPharmacy.Controllers
 
         // GET: api/users
         [HttpGet]
-        public IEnumerable<User> Get()
+        public IActionResult Get()
         {
-            return _userRepository.GetUsers();
+            return Ok(_userRepository.GetUsers());
+        }
+
+
+        [HttpGet("{userId}/stocks")]
+        public IActionResult GetStocks(int userId)
+        {
+            var user = _userRepository.GetUser(userId);
+
+            if (user != null)
+                return Ok(_userRepository.GetStocks(userId));
+
+            return BadRequest();
         }
 
         // GET: api/users/5
