@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PocketPharmacy.Core.Models;
@@ -20,34 +20,42 @@ namespace PocketPharmacy.Controllers
 
         // GET: api/stocks
         [HttpGet]
-        public IEnumerable<Stock> Get()
+        public IActionResult Get()
         {
-            return _stockRepository.GetStocks();
+            return Ok(_stockRepository.GetStocks());
         }
 
         // GET api/stocks>/5
         [HttpGet("{id}")]
-        public Stock Get(int id)
+        public IActionResult Get(int id)
         {
-            return _stockRepository.GetStock(id);
+            var stock = _stockRepository.GetStock(id);
+
+            if (stock != null)
+                return Ok(_stockRepository.GetStock(id));
+
+            return BadRequest();
         }
 
         // POST api/stocks
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Stock stock)
         {
+            throw new NotImplementedException();
         }
 
         // PUT api/stocks
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] Stock stock)
         {
+            throw new NotImplementedException();
         }
 
         // DELETE api/stocks
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            throw new NotImplementedException();
         }
     }
 }

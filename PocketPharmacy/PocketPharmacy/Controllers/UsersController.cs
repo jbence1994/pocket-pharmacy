@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using System;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PocketPharmacy.Core.Models;
 using PocketPharmacy.Core.Repositories;
@@ -38,27 +39,30 @@ namespace PocketPharmacy.Controllers
 
         // GET: api/users/5
         [HttpGet("{id}")]
-        public User Get(int id)
+        public IActionResult Get(int id)
         {
-            return _userRepository.GetUser(id);
+            return Ok(_userRepository.GetUser(id));
         }
 
         // POST: api/users
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] User user)
         {
+            throw new NotImplementedException();
         }
 
         // PUT: api/users/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] User user)
         {
+            throw new NotImplementedException();
         }
 
         // DELETE: api/users/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            throw new NotImplementedException();
         }
     }
 }

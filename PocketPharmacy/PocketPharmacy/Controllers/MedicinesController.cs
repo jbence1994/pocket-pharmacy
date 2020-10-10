@@ -58,7 +58,7 @@ namespace PocketPharmacy.Controllers
 
         // PUT: api/medicines
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] Medicine medicine)
         {
             throw new NotImplementedException();
         }
