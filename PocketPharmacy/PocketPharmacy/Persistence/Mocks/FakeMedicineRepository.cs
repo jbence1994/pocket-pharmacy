@@ -25,6 +25,7 @@ namespace PocketPharmacy.Persistence.Mocks
                     NeedPrescription = true,
                     Dosage = new Dosage
                     {
+                        Id = 1,
                         PerDays = 1,
                         Amount = 2,
                         Unit = "pills"
@@ -41,6 +42,7 @@ namespace PocketPharmacy.Persistence.Mocks
                     NeedPrescription = false,
                     Dosage = new Dosage
                     {
+                        Id = 2,
                         PerDays = 2,
                         Amount = 3,
                         Unit = "mg"
