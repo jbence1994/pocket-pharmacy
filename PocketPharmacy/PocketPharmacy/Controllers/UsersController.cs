@@ -25,23 +25,32 @@ namespace PocketPharmacy.Controllers
             return Ok(_userRepository.GetUsers());
         }
 
-        // GET: api/users/5/stocks
-        [HttpGet("{id}/stocks")]
-        public IActionResult GetStocks(int id)
-        {
-            var user = _userRepository.GetUser(id);
-
-            if (user != null)
-                return Ok(_userRepository.GetStocks(userId: id));
-
-            return BadRequest();
-        }
-
         // GET: api/users/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            return Ok(_userRepository.GetUser(id));
+            try
+            {
+                return Ok(_userRepository.GetUser(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // GET: api/users/5/stocks
+        [HttpGet("{id}/stocks")]
+        public IActionResult GetStocks(int id)
+        {
+            try
+            {
+                return Ok(_userRepository.GetStocks(userId: id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // POST: api/users

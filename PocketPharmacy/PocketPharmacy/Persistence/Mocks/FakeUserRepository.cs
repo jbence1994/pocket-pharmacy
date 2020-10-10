@@ -42,12 +42,18 @@ namespace PocketPharmacy.Persistence.Mocks
 
         public User GetUser(int id)
         {
-            return _users.Find(user => user.Id == id);
+            var user = _users.SingleOrDefault(u => u.Id == id);
+
+            if (user == null)
+                throw new Exception("Nem létező felhasználó.");
+
+            return user;
         }
 
         public IEnumerable<Stock> GetStocks(int userId)
         {
-            return _users.Find(u => u.Id == userId).Stocks;
+            var user = GetUser(userId);
+            return user.Stocks;
         }
     }
 }
