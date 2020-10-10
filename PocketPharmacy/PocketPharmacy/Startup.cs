@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PocketPharmacy.Core.Repositories;
 using PocketPharmacy.Persistence.Mocks;
+using AutoMapper;
 
 namespace PocketPharmacy
 {
@@ -20,6 +21,8 @@ namespace PocketPharmacy
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()); });
+
+            services.AddAutoMapper();
 
             services.AddScoped<IMedicineRepository, FakeMedicineRepository>();
             services.AddScoped<IUserRepository, FakeUserRepository>();

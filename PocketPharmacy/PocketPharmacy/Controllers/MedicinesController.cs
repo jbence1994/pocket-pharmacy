@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using PocketPharmacy.Controllers.Resources;
 using PocketPharmacy.Core.Models;
 using PocketPharmacy.Core.Repositories;
 
@@ -12,10 +15,12 @@ namespace PocketPharmacy.Controllers
     public class MedicinesController : ControllerBase
     {
         private readonly IMedicineRepository _medicineRepository;
+        private readonly IMapper _mapper;
 
-        public MedicinesController(IMedicineRepository medicineRepository)
+        public MedicinesController(IMedicineRepository medicineRepository, IMapper mapper)
         {
             _medicineRepository = medicineRepository;
+            _mapper = mapper;
         }
 
         // GET: api/medicines/user=5
@@ -24,7 +29,10 @@ namespace PocketPharmacy.Controllers
         {
             try
             {
-                return Ok(_medicineRepository.GetMedicines(userId));
+                var medicines = _medicineRepository.GetMedicines(userId);
+                var medicineResources = _mapper.Map<IEnumerable<Medicine>, IEnumerable<MedicineResource>>(medicines);
+
+                return Ok(medicineResources);
             }
             catch (Exception ex)
             {
@@ -38,7 +46,10 @@ namespace PocketPharmacy.Controllers
         {
             try
             {
-                return Ok(_medicineRepository.GetMedicine(userId, medicineId));
+                var medicine = _medicineRepository.GetMedicine(userId, medicineId);
+                var medicineResource = _mapper.Map<Medicine, MedicineResource>(medicine);
+
+                return Ok(medicineResource);
             }
             catch (Exception ex)
             {
@@ -48,14 +59,14 @@ namespace PocketPharmacy.Controllers
 
         // POST: api/medicines
         [HttpPost]
-        public IActionResult Post([FromBody] Medicine medicine)
+        public IActionResult Post([FromBody] MedicineResource medicine)
         {
             throw new NotImplementedException();
         }
 
         // PUT: api/medicines
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Medicine medicine)
+        public IActionResult Put(int id, [FromBody] MedicineResource medicine)
         {
             throw new NotImplementedException();
         }

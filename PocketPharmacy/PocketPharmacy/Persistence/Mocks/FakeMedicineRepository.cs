@@ -37,7 +37,8 @@ namespace PocketPharmacy.Persistence.Mocks
                         Id = 1,
                         Username = "jbence",
                         Password = "12345"
-                    }
+                    },
+                    Quantity = 10
                 },
                 new Medicine
                 {
@@ -62,7 +63,8 @@ namespace PocketPharmacy.Persistence.Mocks
                         Id = 1,
                         Username = "jbence",
                         Password = "12345"
-                    }
+                    },
+                    Quantity = 2
                 }
             };
         }
