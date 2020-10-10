@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PocketPharmacy.Core.Models;
@@ -20,41 +21,54 @@ namespace PocketPharmacy.Controllers
 
         // GET: api/medicines
         [HttpGet]
-        public IEnumerable<Medicine> Get()
+        public IActionResult Get()
         {
-            return _medicineRepository.GetMedicines();
+            return Ok(_medicineRepository.GetMedicines());
         }
 
         // GET: api/medicines/5
         [HttpGet("{id}")]
-        public Medicine Get(int id)
+        public IActionResult Get(int id)
         {
-            return _medicineRepository.GetMedicine(id);
+            var medicine = _medicineRepository.GetMedicine(id);
+
+            if (medicine != null)
+                return Ok(_medicineRepository.GetMedicine(id));
+
+            return BadRequest();
         }
 
         // GET: api/medicines/5/dosage
         [HttpGet("{id}/dosage")]
         public IActionResult GetMedicineDosage(int id)
         {
-            return Ok(_medicineRepository.GetDosage(medicineId: id));
+            var medicine = _medicineRepository.GetMedicine(id);
+
+            if (medicine != null)
+                return Ok(_medicineRepository.GetDosage(medicineId: id));
+
+            return BadRequest();
         }
 
         // POST: api/medicines
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Medicine medicine)
         {
+            throw new NotImplementedException();
         }
 
         // PUT: api/medicines
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] string value)
         {
+            throw new NotImplementedException();
         }
 
         // DELETE: api/medicines/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            throw new NotImplementedException();
         }
     }
 }
