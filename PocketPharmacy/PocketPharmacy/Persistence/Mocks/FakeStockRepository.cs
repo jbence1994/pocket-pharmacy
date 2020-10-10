@@ -33,7 +33,9 @@ namespace PocketPharmacy.Persistence.Mocks
                             Amount = 30,
                             Unit = "mg"
                         }
-                    }
+                    },
+                    RecordingDate = DateTime.Now,
+                    Quantity = 2
                 }
             };
         }
