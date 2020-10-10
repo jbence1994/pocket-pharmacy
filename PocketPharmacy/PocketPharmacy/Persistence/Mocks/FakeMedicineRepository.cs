@@ -66,15 +66,8 @@ namespace PocketPharmacy.Persistence.Mocks
 
         public Dosage GetDosage(int medicineId)
         {
-            try
-            {
-                var medicine = GetMedicine(medicineId);
-                return medicine.Dosage;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            var medicine = GetMedicine(medicineId);
+            return medicine.Dosage;
         }
     }
 }
