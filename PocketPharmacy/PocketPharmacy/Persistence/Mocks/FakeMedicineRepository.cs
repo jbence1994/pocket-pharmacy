@@ -57,5 +57,10 @@ namespace PocketPharmacy.Persistence.Mocks
         {
             return _medicines.Find(medicine => medicine.Id == id);
         }
+
+        public Dosage GetDosage(int medicineId)
+        {
+            return _medicines.Find(medicine => medicine.Id == medicineId).Dosage;
+        }
     }
 }

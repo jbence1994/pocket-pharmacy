@@ -32,6 +32,13 @@ namespace PocketPharmacy.Controllers
             return _medicineRepository.GetMedicine(id);
         }
 
+        // GET: api/medicines/5/dosage
+        [HttpGet("{id}/dosage")]
+        public IActionResult GetMedicineDosage(int id)
+        {
+            return Ok(_medicineRepository.GetDosage(medicineId: id));
+        }
+
         // POST: api/medicines
         [HttpPost]
         public void Post([FromBody] string value)
