@@ -18,20 +18,13 @@ namespace PocketPharmacy.Controllers
             _medicineRepository = medicineRepository;
         }
 
-        // GET: api/medicines
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok(_medicineRepository.GetMedicines());
-        }
-
-        // GET: api/medicines/5
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        // GET: api/medicines/user=5
+        [HttpGet("user={userId}")]
+        public IActionResult GetMedicines(int userId)
         {
             try
             {
-                return Ok(_medicineRepository.GetMedicine(id));
+                return Ok(_medicineRepository.GetMedicines(userId));
             }
             catch (Exception ex)
             {
@@ -39,13 +32,13 @@ namespace PocketPharmacy.Controllers
             }
         }
 
-        // GET: api/medicines/5/dosage
-        [HttpGet("{id}/dosage")]
-        public IActionResult GetMedicineDosage(int id)
+        // GET: api/medicines/user=5/medicine=5
+        [HttpGet("user={userId}/medicine={medicineId}")]
+        public IActionResult GetMedicine(int userId, int medicineId)
         {
             try
             {
-                return Ok(_medicineRepository.GetDosage(medicineId: id));
+                return Ok(_medicineRepository.GetMedicine(userId, medicineId));
             }
             catch (Exception ex)
             {

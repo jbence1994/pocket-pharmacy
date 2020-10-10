@@ -23,12 +23,20 @@ namespace PocketPharmacy.Persistence.Mocks
                     Unit = "pills",
                     ExpirationDate = new DateTime(2020, 09, 01),
                     NeedPrescription = true,
+                    DosageId = 1,
                     Dosage = new Dosage
                     {
                         Id = 1,
                         PerDays = 1,
                         Amount = 2,
                         Unit = "pills"
+                    },
+                    UserId = 1,
+                    User = new User
+                    {
+                        Id = 1,
+                        Username = "jbence",
+                        Password = "12345"
                     }
                 },
                 new Medicine
@@ -40,36 +48,39 @@ namespace PocketPharmacy.Persistence.Mocks
                     Unit = "mg",
                     ExpirationDate = new DateTime(2021, 01, 01),
                     NeedPrescription = false,
+                    DosageId = 2,
                     Dosage = new Dosage
                     {
                         Id = 2,
                         PerDays = 2,
                         Amount = 3,
                         Unit = "mg"
+                    },
+                    UserId = 1,
+                    User = new User
+                    {
+                        Id = 1,
+                        Username = "jbence",
+                        Password = "12345"
                     }
                 }
             };
         }
 
-        public IEnumerable<Medicine> GetMedicines()
+        public IEnumerable<Medicine> GetMedicines(int userId)
         {
-            return _medicines;
+            return _medicines.Where(m => m.UserId == userId);
         }
 
-        public Medicine GetMedicine(int id)
+        public Medicine GetMedicine(int userId, int medicineId)
         {
-            var medicine = _medicines.SingleOrDefault(m => m.Id == id);
+            var medicine = GetMedicines(userId)
+                .SingleOrDefault(m => m.Id == medicineId);
 
             if (medicine == null)
                 throw new Exception("Nem létező gyógyszer.");
 
             return medicine;
-        }
-
-        public Dosage GetDosage(int medicineId)
-        {
-            var medicine = GetMedicine(medicineId);
-            return medicine.Dosage;
         }
     }
 }
