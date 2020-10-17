@@ -82,7 +82,6 @@ namespace PocketPharmacy.Controllers
         }
 
         // DELETE: api/medicines/user=5/medicine=5
-
         [HttpDelete("user={userId}/medicine={medicineId}")]
         public IActionResult Delete(int userId, int medicineId)
         {
@@ -98,6 +97,7 @@ namespace PocketPharmacy.Controllers
             }
         }
 
+        // GET: api/medicines/5/isExpired
         [HttpGet("{id}/isExpired")]
         public IActionResult IsExpiredMedicine(int id)
         {
