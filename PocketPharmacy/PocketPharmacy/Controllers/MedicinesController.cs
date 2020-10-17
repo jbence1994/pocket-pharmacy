@@ -97,5 +97,19 @@ namespace PocketPharmacy.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+        [HttpGet("user={userId}/medicine={medicineId}/isExpired")]
+        public IActionResult IsExpiredMedicine(int userId, int medicineId)
+        {
+            try
+            {
+                var isExpiredMedicine = _medicineRepository.IsExpiredMedicine(userId, medicineId);
+                return Ok(isExpiredMedicine);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

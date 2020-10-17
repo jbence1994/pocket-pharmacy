@@ -40,6 +40,11 @@ namespace PocketPharmacy.Persistence
             _context.SaveChanges();
         }
 
+        public void UpdateMedicine(Medicine medicine)
+        {
+            throw new NotImplementedException();
+        }
+
         public void DeleteMedicine(int userId, int medicineId)
         {
             var medicine = GetMedicine(userId, medicineId);
@@ -49,6 +54,21 @@ namespace PocketPharmacy.Persistence
 
             _context.Medicines.Remove(medicine);
             _context.SaveChanges();
+        }
+
+        public double GetWeeklyDosage(int userId, int medicineId)
+        {
+            return GetMedicine(userId, medicineId).GetWeeklyDosage();
+        }
+
+        public bool IsExpiredMedicine(int userId, int medicineId)
+        {
+            return GetMedicine(userId, medicineId).IsExpired();
+        }
+
+        public bool HasWeeklyDosage(int userId, int medicineId)
+        {
+            return GetMedicine(userId, medicineId).HasWeeklyDosage();
         }
     }
 }
