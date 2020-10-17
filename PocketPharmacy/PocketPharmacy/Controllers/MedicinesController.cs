@@ -88,7 +88,7 @@ namespace PocketPharmacy.Controllers
         {
             try
             {
-                _medicineRepository.DeleteMedicine(userId, medicineId);
+                _medicineRepository.DeleteMedicine(medicineId);
 
                 return Ok(medicineId);
             }
@@ -98,12 +98,12 @@ namespace PocketPharmacy.Controllers
             }
         }
 
-        [HttpGet("user={userId}/medicine={medicineId}/isExpired")]
-        public IActionResult IsExpiredMedicine(int userId, int medicineId)
+        [HttpGet("{id}/isExpired")]
+        public IActionResult IsExpiredMedicine(int id)
         {
             try
             {
-                var isExpiredMedicine = _medicineRepository.IsExpiredMedicine(userId, medicineId);
+                var isExpiredMedicine = _medicineRepository.IsExpiredMedicine(id);
                 return Ok(isExpiredMedicine);
             }
             catch (Exception ex)

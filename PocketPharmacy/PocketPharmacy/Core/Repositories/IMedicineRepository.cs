@@ -9,9 +9,9 @@ namespace PocketPharmacy.Core.Repositories
         Medicine GetMedicine(int userId, int medicineId);
         void AddMedicine(Medicine medicine);
         void UpdateMedicine(Medicine medicine);
-        void DeleteMedicine(int userId, int medicineId);
-        double GetWeeklyDosage(int userId, int medicineId);
-        bool IsExpiredMedicine(int userId, int medicineId);
-        bool HasWeeklyDosage(int userId, int medicineId);
+        void DeleteMedicine(int id);
+        double GetWeeklyDosage(int id);
+        bool IsExpiredMedicine(int id);
+        bool HasWeeklyDosage(int id);
     }
 }

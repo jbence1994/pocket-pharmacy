@@ -23,10 +23,27 @@ namespace PocketPharmacy.Persistence
                 .Where(m => m.UserId == userId).ToList();
         }
 
+        private IEnumerable<Medicine> GetMedicines()
+        {
+            return _context.Medicines
+                .Include(m => m.Dosage)
+                .ToList();
+        }
+
         public Medicine GetMedicine(int userId, int medicineId)
         {
             var medicine = GetMedicines(userId)
                 .SingleOrDefault(m => m.Id == medicineId);
+
+            if (medicine == null)
+                throw new Exception("Nem létező gyógyszer.");
+
+            return medicine;
+        }
+
+        private Medicine GetMedicine(int medicineId)
+        {
+            var medicine = GetMedicines().SingleOrDefault(m => m.Id == medicineId);
 
             if (medicine == null)
                 throw new Exception("Nem létező gyógyszer.");
@@ -45,9 +62,9 @@ namespace PocketPharmacy.Persistence
             throw new NotImplementedException();
         }
 
-        public void DeleteMedicine(int userId, int medicineId)
+        public void DeleteMedicine(int id)
         {
-            var medicine = GetMedicine(userId, medicineId);
+            var medicine = GetMedicine(id);
 
             if (medicine == null)
                 throw new Exception("Nem létező gyógyszer.");
@@ -56,19 +73,25 @@ namespace PocketPharmacy.Persistence
             _context.SaveChanges();
         }
 
-        public double GetWeeklyDosage(int userId, int medicineId)
+        public double GetWeeklyDosage(int id)
         {
-            return GetMedicine(userId, medicineId).GetWeeklyDosage();
+            var medicine = GetMedicine(id);
+
+            return medicine.GetWeeklyDosage();
         }
 
-        public bool IsExpiredMedicine(int userId, int medicineId)
+        public bool IsExpiredMedicine(int id)
         {
-            return GetMedicine(userId, medicineId).IsExpired();
+            var medicine = GetMedicine(id);
+
+            return medicine.IsExpired();
         }
 
-        public bool HasWeeklyDosage(int userId, int medicineId)
+        public bool HasWeeklyDosage(int id)
         {
-            return GetMedicine(userId, medicineId).HasWeeklyDosage();
+            var medicine = GetMedicine(id);
+
+            return medicine.HasWeeklyDosage();
         }
     }
 }
