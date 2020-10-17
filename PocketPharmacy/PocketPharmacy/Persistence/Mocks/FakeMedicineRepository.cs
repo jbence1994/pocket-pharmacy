@@ -84,5 +84,20 @@ namespace PocketPharmacy.Persistence.Mocks
 
             return medicine;
         }
+
+        public void AddMedicine(Medicine medicine)
+        {
+            _medicines.Add(medicine);
+        }
+
+        public void DeleteMedicine(int userId, int medicineId)
+        {
+            var medicine = GetMedicine(userId, medicineId);
+
+            if (medicine == null)
+                throw new Exception("Nem létező gyógyszer.");
+
+            _medicines.Remove(medicine);
+        }
     }
 }

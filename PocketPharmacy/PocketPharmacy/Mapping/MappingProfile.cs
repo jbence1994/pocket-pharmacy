@@ -16,6 +16,7 @@ namespace PocketPharmacy.Mapping
 
             // API Resource to Domain model
 
+            CreateMap<MedicineResource, Medicine>();
             CreateMap<UserResource, User>();
         }
     }

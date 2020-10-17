@@ -59,9 +59,19 @@ namespace PocketPharmacy.Controllers
 
         // POST: api/medicines
         [HttpPost]
-        public IActionResult Post([FromBody] MedicineResource medicine)
+        public IActionResult Post([FromBody] MedicineResource medicineResource)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var medicine = _mapper.Map<MedicineResource, Medicine>(medicineResource);
+                _medicineRepository.AddMedicine(medicine);
+
+                return Ok(medicineResource);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // PUT: api/medicines
@@ -71,11 +81,21 @@ namespace PocketPharmacy.Controllers
             throw new NotImplementedException();
         }
 
-        // DELETE: api/medicines/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        // DELETE: api/medicines/user=5/medicine=5
+
+        [HttpDelete("user={userId}/medicine={medicineId}")]
+        public IActionResult Delete(int userId, int medicineId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _medicineRepository.DeleteMedicine(userId, medicineId);
+
+                return Ok(medicineId);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }
