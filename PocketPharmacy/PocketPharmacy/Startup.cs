@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PocketPharmacy.Core.Repositories;
-using PocketPharmacy.Persistence.Mocks;
 using AutoMapper;
 using PocketPharmacy.Persistence;
 
@@ -27,7 +26,7 @@ namespace PocketPharmacy
 
             services.AddAutoMapper();
 
-            services.AddScoped<IMedicineRepository, FakeMedicineRepository>();
+            services.AddScoped<IMedicineRepository, MedicineRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddControllers();
