@@ -8,8 +8,9 @@ namespace PocketPharmacy.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<Medicine, MedicineResource>();
             CreateMap<Dosage, DosageResource>();
+            CreateMap<Medicine, MedicineResource>();
+            CreateMap<User, UserResource>();
         }
     }
 }

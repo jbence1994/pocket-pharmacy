@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using PocketPharmacy.Core.Models;
 using PocketPharmacy.Core.Repositories;
 
@@ -31,6 +33,21 @@ namespace PocketPharmacy.Persistence.Mocks
                     Password = "12345"
                 }
             };
+        }
+
+        public IEnumerable<User> GetUsers()
+        {
+            return _users;
+        }
+
+        public User GetUser(int id)
+        {
+            var user = _users.SingleOrDefault(u => u.Id == id);
+
+            if (user == null)
+                throw new Exception("Nem létező felhasználó.");
+
+            return user;
         }
 
         public void AddUser(User user)
