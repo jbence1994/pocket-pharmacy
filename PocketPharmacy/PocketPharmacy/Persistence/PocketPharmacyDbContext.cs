@@ -5,6 +5,7 @@ namespace PocketPharmacy.Persistence
 {
     public class PocketPharmacyDbContext : DbContext
     {
+        public DbSet<Dosage> Dosages { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
         public DbSet<User> Users { get; set; }
 
