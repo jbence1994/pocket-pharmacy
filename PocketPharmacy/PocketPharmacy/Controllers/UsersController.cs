@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PocketPharmacy.Controllers.Resources;
@@ -59,7 +60,11 @@ namespace PocketPharmacy.Controllers
                 var user = _mapper.Map<UserResource, User>(userResource);
                 _userRepository.AddUser(user);
 
-                return Ok(userResource);
+                user = _userRepository.GetUser(user.Id);
+
+                var result = _mapper.Map<User, UserResource>(user);
+
+                return Ok(result);
             }
             catch (Exception ex)
             {

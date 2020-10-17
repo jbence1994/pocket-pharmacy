@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using PocketPharmacy.Core.Repositories;
 using PocketPharmacy.Persistence.Mocks;
 using AutoMapper;
+using PocketPharmacy.Persistence;
 
 namespace PocketPharmacy
 {
@@ -22,10 +23,12 @@ namespace PocketPharmacy
         {
             services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()); });
 
+            services.AddDbContext<PocketPharmacyDbContext>();
+
             services.AddAutoMapper();
 
             services.AddScoped<IMedicineRepository, FakeMedicineRepository>();
-            services.AddScoped<IUserRepository, FakeUserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddControllers();
         }
