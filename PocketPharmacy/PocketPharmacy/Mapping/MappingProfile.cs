@@ -8,9 +8,15 @@ namespace PocketPharmacy.Mapping
     {
         public MappingProfile()
         {
+            // Domain models to API Resource
+
             CreateMap<Dosage, DosageResource>();
             CreateMap<Medicine, MedicineResource>();
             CreateMap<User, UserResource>();
+
+            // API Resource to Domain model
+
+            CreateMap<UserResource, User>();
         }
     }
 }

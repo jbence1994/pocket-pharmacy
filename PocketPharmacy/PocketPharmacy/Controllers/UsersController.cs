@@ -52,9 +52,19 @@ namespace PocketPharmacy.Controllers
 
         // POST: api/users
         [HttpPost]
-        public IActionResult Post([FromBody] User user)
+        public IActionResult Post([FromBody] UserResource userResource)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var user = _mapper.Map<UserResource, User>(userResource);
+                _userRepository.AddUser(user);
+
+                return Ok(userResource);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
