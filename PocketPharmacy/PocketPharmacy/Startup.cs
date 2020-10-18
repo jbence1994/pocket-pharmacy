@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PocketPharmacy.Core.Repositories;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using PocketPharmacy.Persistence;
 
 namespace PocketPharmacy
@@ -22,7 +23,8 @@ namespace PocketPharmacy
         {
             services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()); });
 
-            services.AddDbContext<PocketPharmacyDbContext>();
+            services.AddDbContext<PocketPharmacyDbContext>(options => options
+                .UseMySQL(Configuration.GetConnectionString("Default")));
 
             services.AddAutoMapper();
 

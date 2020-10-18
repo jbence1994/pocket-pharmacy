@@ -13,10 +13,5 @@ namespace PocketPharmacy.Persistence
             : base(options)
         {
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySQL("server=127.0.0.1;database=pocketpharmacy;uid=root;password=;port=3306");
-        }
     }
 }
