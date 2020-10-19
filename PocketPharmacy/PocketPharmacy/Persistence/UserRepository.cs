@@ -33,7 +33,6 @@ namespace PocketPharmacy.Persistence
         public void AddUser(User user)
         {
             _context.Users.Add(user);
-            _context.SaveChanges();
         }
     }
 }

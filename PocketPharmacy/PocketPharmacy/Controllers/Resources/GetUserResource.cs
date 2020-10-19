@@ -1,6 +1,6 @@
 ﻿namespace PocketPharmacy.Controllers.Resources
 {
-    public class UserResource
+    public class GetUserResource
     {
         public int Id { get; set; }
         public string Username { get; set; }

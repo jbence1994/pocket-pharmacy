@@ -4,6 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PocketPharmacy.Controllers.Resources;
+using PocketPharmacy.Core;
 using PocketPharmacy.Core.Models;
 using PocketPharmacy.Core.Repositories;
 
@@ -15,11 +16,13 @@ namespace PocketPharmacy.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UsersController(IUserRepository userRepository, IMapper mapper)
+        public UsersController(IUserRepository userRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -28,7 +31,7 @@ namespace PocketPharmacy.Controllers
         public IActionResult Get()
         {
             var users = _userRepository.GetUsers();
-            var userResources = _mapper.Map<IEnumerable<User>, IEnumerable<UserResource>>(users);
+            var userResources = _mapper.Map<IEnumerable<User>, IEnumerable<GetUserResource>>(users);
 
             return Ok(userResources);
         }
@@ -40,7 +43,7 @@ namespace PocketPharmacy.Controllers
             try
             {
                 var user = _userRepository.GetUser(id);
-                var userResource = _mapper.Map<User, UserResource>(user);
+                var userResource = _mapper.Map<User, GetUserResource>(user);
 
                 return Ok(userResource);
             }
@@ -52,16 +55,18 @@ namespace PocketPharmacy.Controllers
 
         // POST: api/users
         [HttpPost]
-        public IActionResult Post([FromBody] UserResource userResource)
+        public IActionResult Post([FromBody] SaveUserResource userResource)
         {
             try
             {
-                var user = _mapper.Map<UserResource, User>(userResource);
+                var user = _mapper.Map<SaveUserResource, User>(userResource);
+
                 _userRepository.AddUser(user);
+                _unitOfWork.Complete();
 
                 user = _userRepository.GetUser(user.Id);
 
-                var result = _mapper.Map<User, UserResource>(user);
+                var result = _mapper.Map<User, GetUserResource>(user);
 
                 return Ok(result);
             }

@@ -4,6 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PocketPharmacy.Controllers.Resources;
+using PocketPharmacy.Core;
 using PocketPharmacy.Core.Models;
 using PocketPharmacy.Core.Repositories;
 
@@ -15,11 +16,13 @@ namespace PocketPharmacy.Controllers
     public class MedicinesController : ControllerBase
     {
         private readonly IMedicineRepository _medicineRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public MedicinesController(IMedicineRepository medicineRepository, IMapper mapper)
+        public MedicinesController(IMedicineRepository medicineRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _medicineRepository = medicineRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -30,7 +33,7 @@ namespace PocketPharmacy.Controllers
             try
             {
                 var medicines = _medicineRepository.GetMedicines(userId);
-                var medicineResources = _mapper.Map<IEnumerable<Medicine>, IEnumerable<MedicineResource>>(medicines);
+                var medicineResources = _mapper.Map<IEnumerable<Medicine>, IEnumerable<GetMedicineResource>>(medicines);
 
                 return Ok(medicineResources);
             }
@@ -47,7 +50,7 @@ namespace PocketPharmacy.Controllers
             try
             {
                 var medicine = _medicineRepository.GetMedicine(userId, medicineId);
-                var medicineResource = _mapper.Map<Medicine, MedicineResource>(medicine);
+                var medicineResource = _mapper.Map<Medicine, SaveMedicineResource>(medicine);
 
                 return Ok(medicineResource);
             }
@@ -59,12 +62,14 @@ namespace PocketPharmacy.Controllers
 
         // POST: api/medicines
         [HttpPost]
-        public IActionResult Post([FromBody] MedicineResource medicineResource)
+        public IActionResult Post([FromBody] SaveMedicineResource medicineResource)
         {
             try
             {
-                var medicine = _mapper.Map<MedicineResource, Medicine>(medicineResource);
+                var medicine = _mapper.Map<SaveMedicineResource, Medicine>(medicineResource);
+
                 _medicineRepository.AddMedicine(medicine);
+                _unitOfWork.Complete();
 
                 return Ok(medicineResource);
             }
@@ -76,7 +81,7 @@ namespace PocketPharmacy.Controllers
 
         // PUT: api/medicines
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] MedicineResource medicine)
+        public IActionResult Put(int id, [FromBody] SaveMedicineResource medicine)
         {
             throw new NotImplementedException();
         }
@@ -88,6 +93,7 @@ namespace PocketPharmacy.Controllers
             try
             {
                 _medicineRepository.DeleteMedicine(medicineId);
+                _unitOfWork.Complete();
 
                 return Ok(medicineId);
             }

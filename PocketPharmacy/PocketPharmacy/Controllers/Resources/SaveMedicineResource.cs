@@ -2,7 +2,7 @@
 
 namespace PocketPharmacy.Controllers.Resources
 {
-    public class MedicineResource
+    public class SaveMedicineResource
     {
         public string Name { get; set; }
         public string Description { get; set; }

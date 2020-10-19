@@ -54,12 +54,6 @@ namespace PocketPharmacy.Persistence
         public void AddMedicine(Medicine medicine)
         {
             _context.Medicines.Add(medicine);
-            _context.SaveChanges();
-        }
-
-        public void UpdateMedicine(Medicine medicine)
-        {
-            throw new NotImplementedException();
         }
 
         public void DeleteMedicine(int id)
@@ -70,7 +64,6 @@ namespace PocketPharmacy.Persistence
                 throw new Exception("Nem létező gyógyszer.");
 
             _context.Medicines.Remove(medicine);
-            _context.SaveChanges();
         }
 
         public double GetWeeklyDosage(int id)
