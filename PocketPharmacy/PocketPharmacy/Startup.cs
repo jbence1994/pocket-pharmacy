@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using PocketPharmacy.Core.Repositories;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using PocketPharmacy.Core;
 using PocketPharmacy.Persistence;
 
 namespace PocketPharmacy
@@ -29,6 +30,7 @@ namespace PocketPharmacy
 
             services.AddAutoMapper();
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IMedicineRepository, MedicineRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
