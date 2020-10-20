@@ -1,4 +1,4 @@
-﻿namespace PocketPharmacy.Controllers.Resources
+﻿namespace PocketPharmacy.Resources
 {
     public class DosageResource
     {

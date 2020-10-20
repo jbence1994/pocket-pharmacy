@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using PocketPharmacy.Controllers.Resources;
 using PocketPharmacy.Core;
 using PocketPharmacy.Core.Models;
 using PocketPharmacy.Core.Repositories;
+using PocketPharmacy.Resources;
 
 namespace PocketPharmacy.Controllers
 {
@@ -60,18 +60,24 @@ namespace PocketPharmacy.Controllers
             }
         }
 
-        // POST: api/medicines
+        // POST: api/medicines/
         [HttpPost]
         public IActionResult Post([FromBody] SaveMedicineResource medicineResource)
         {
             try
             {
-                var medicine = _mapper.Map<SaveMedicineResource, Medicine>(medicineResource);
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
+                var medicine = _mapper.Map<SaveMedicineResource, Medicine>(medicineResource);
                 _medicineRepository.AddMedicine(medicine);
+
                 _unitOfWork.Complete();
 
-                return Ok(medicineResource);
+                medicine = _medicineRepository.GetMedicine(medicine.Id);
+                var result = _mapper.Map<Medicine, GetMedicineResource>(medicine);
+
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -81,14 +87,32 @@ namespace PocketPharmacy.Controllers
 
         // PUT: api/medicines
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] SaveMedicineResource medicine)
+        public IActionResult Put(int id, [FromBody] SaveMedicineResource medicineResource)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var medicine = _medicineRepository.GetMedicine(id);
+                _mapper.Map<SaveMedicineResource, Medicine>(medicineResource, medicine);
+
+                _unitOfWork.Complete();
+
+                medicine = _medicineRepository.GetMedicine(medicine.Id);
+                var result = _mapper.Map<Medicine, GetMedicineResource>(medicine);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // DELETE: api/medicines/user=5/medicine=5
         [HttpDelete("user={userId}/medicine={medicineId}")]
-        public IActionResult Delete(int userId, int medicineId)
+        public IActionResult Delete(int medicineId)
         {
             try
             {
