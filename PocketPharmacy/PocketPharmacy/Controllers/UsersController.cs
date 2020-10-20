@@ -60,15 +60,14 @@ namespace PocketPharmacy.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest();
+                    return BadRequest(ModelState);
 
                 var user = _mapper.Map<SaveUserResource, User>(userResource);
-
                 _userRepository.AddUser(user);
+                
                 _unitOfWork.Complete();
 
                 user = _userRepository.GetUser(user.Id);
-
                 var result = _mapper.Map<User, GetUserResource>(user);
 
                 return Ok(result);

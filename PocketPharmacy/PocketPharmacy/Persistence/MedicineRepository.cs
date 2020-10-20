@@ -41,7 +41,7 @@ namespace PocketPharmacy.Persistence
             return medicine;
         }
 
-        private Medicine GetMedicine(int medicineId)
+        public Medicine GetMedicine(int medicineId)
         {
             var medicine = GetMedicines().SingleOrDefault(m => m.Id == medicineId);
 
