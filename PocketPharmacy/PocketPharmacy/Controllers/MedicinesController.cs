@@ -85,7 +85,7 @@ namespace PocketPharmacy.Controllers
             }
         }
 
-        // PUT: api/medicines
+        // PUT: api/medicines/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] SaveMedicineResource medicineResource)
         {
