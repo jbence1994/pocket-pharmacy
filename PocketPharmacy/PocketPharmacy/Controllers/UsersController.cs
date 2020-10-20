@@ -59,6 +59,9 @@ namespace PocketPharmacy.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
                 var user = _mapper.Map<SaveUserResource, User>(userResource);
 
                 _userRepository.AddUser(user);
