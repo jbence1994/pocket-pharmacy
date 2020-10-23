@@ -50,7 +50,7 @@ namespace PocketPharmacy.Controllers
             try
             {
                 var medicine = _medicineRepository.GetMedicine(userId, medicineId);
-                var medicineResource = _mapper.Map<Medicine, SaveMedicineResource>(medicine);
+                var medicineResource = _mapper.Map<Medicine, GetMedicineResource>(medicine);
 
                 return Ok(medicineResource);
             }
@@ -70,6 +70,8 @@ namespace PocketPharmacy.Controllers
                     return BadRequest(ModelState);
 
                 var medicine = _mapper.Map<SaveMedicineResource, Medicine>(medicineResource);
+                medicine.LastUpdatedAt = DateTime.Now;
+
                 _medicineRepository.AddMedicine(medicine);
 
                 _unitOfWork.Complete();
@@ -95,6 +97,8 @@ namespace PocketPharmacy.Controllers
                     return BadRequest(ModelState);
 
                 var medicine = _medicineRepository.GetMedicine(id);
+                medicine.LastUpdatedAt = DateTime.Now;
+
                 _mapper.Map<SaveMedicineResource, Medicine>(medicineResource, medicine);
 
                 _unitOfWork.Complete();
