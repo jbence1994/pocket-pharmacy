@@ -18,6 +18,7 @@ namespace PocketPharmacy.Mapping
 
             CreateMap<DosageResource, Dosage>();
             CreateMap<SaveMedicineResource, Medicine>();
+            CreateMap<UpdateMedicineResource, Medicine>();
             CreateMap<SaveUserResource, User>();
         }
     }

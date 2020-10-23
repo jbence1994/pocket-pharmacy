@@ -89,7 +89,7 @@ namespace PocketPharmacy.Controllers
 
         // PUT: api/medicines/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] SaveMedicineResource medicineResource)
+        public IActionResult Put(int id, [FromBody] UpdateMedicineResource medicineResource)
         {
             try
             {
@@ -99,7 +99,7 @@ namespace PocketPharmacy.Controllers
                 var medicine = _medicineRepository.GetMedicine(id);
                 medicine.LastUpdatedAt = DateTime.Now;
 
-                _mapper.Map<SaveMedicineResource, Medicine>(medicineResource, medicine);
+                _mapper.Map(medicineResource, medicine);
 
                 _unitOfWork.Complete();
 
