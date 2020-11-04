@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -26,33 +25,6 @@ namespace PocketPharmacy.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/users
-        [HttpGet]
-        public IActionResult Get()
-        {
-            var users = _userRepository.GetUsers();
-            var userResources = _mapper.Map<IEnumerable<User>, IEnumerable<GetUserResource>>(users);
-
-            return Ok(userResources);
-        }
-
-        // GET: api/users/5
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
-        {
-            try
-            {
-                var user = _userRepository.GetUser(id);
-                var userResource = _mapper.Map<User, GetUserResource>(user);
-
-                return Ok(userResource);
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
-        }
-
         // POST: api/users
         [HttpPost]
         public IActionResult Post([FromBody] SaveUserResource userResource)
@@ -64,7 +36,7 @@ namespace PocketPharmacy.Controllers
 
                 var user = _mapper.Map<SaveUserResource, User>(userResource);
                 _userRepository.AddUser(user);
-                
+
                 _unitOfWork.Complete();
 
                 user = _userRepository.GetUser(user.Id);
