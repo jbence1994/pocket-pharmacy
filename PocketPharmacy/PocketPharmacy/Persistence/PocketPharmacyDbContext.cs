@@ -13,5 +13,18 @@ namespace PocketPharmacy.Persistence
             : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Medicine>()
+                .HasOne<Dosage>(m => m.Dosage)
+                .WithOne(d => d.Medicine)
+                .HasForeignKey<Dosage>(d => d.MedicineId);
+
+            modelBuilder.Entity<Medicine>()
+                .HasOne<User>(m => m.User)
+                .WithMany(u => u.Medicines)
+                .HasForeignKey(m => m.UserId);
+        }
     }
 }
