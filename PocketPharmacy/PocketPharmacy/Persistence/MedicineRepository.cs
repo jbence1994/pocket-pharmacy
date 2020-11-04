@@ -9,9 +9,9 @@ namespace PocketPharmacy.Persistence
 {
     public class MedicineRepository : IMedicineRepository
     {
-        private readonly PocketPharmacyDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public MedicineRepository(PocketPharmacyDbContext context)
+        public MedicineRepository(ApplicationDbContext context)
         {
             _context = context;
         }

@@ -8,9 +8,9 @@ namespace PocketPharmacy.Persistence
 {
     public class UserRepository : IUserRepository
     {
-        private readonly PocketPharmacyDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public UserRepository(PocketPharmacyDbContext context)
+        public UserRepository(ApplicationDbContext context)
         {
             _context = context;
         }

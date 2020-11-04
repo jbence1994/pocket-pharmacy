@@ -4,9 +4,9 @@ namespace PocketPharmacy.Persistence
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly PocketPharmacyDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public UnitOfWork(PocketPharmacyDbContext context)
+        public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
         }

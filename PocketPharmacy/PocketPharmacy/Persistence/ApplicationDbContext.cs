@@ -3,13 +3,13 @@ using PocketPharmacy.Core.Models;
 
 namespace PocketPharmacy.Persistence
 {
-    public class PocketPharmacyDbContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
         public DbSet<Dosage> Dosages { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
         public DbSet<User> Users { get; set; }
 
-        public PocketPharmacyDbContext(DbContextOptions<PocketPharmacyDbContext> options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
