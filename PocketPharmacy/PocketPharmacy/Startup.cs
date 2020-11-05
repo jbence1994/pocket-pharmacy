@@ -34,6 +34,10 @@ namespace PocketPharmacy
             services.AddScoped<IMedicineRepository, MedicineRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
+            services.AddAuthentication();
+
+            services.AddAuthorization();
+
             services.AddControllers();
         }
 
