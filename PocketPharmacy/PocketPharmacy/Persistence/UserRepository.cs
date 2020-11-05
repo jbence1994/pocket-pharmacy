@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using PocketPharmacy.Core.Models;
 using PocketPharmacy.Core.Repositories;
@@ -15,11 +14,6 @@ namespace PocketPharmacy.Persistence
             _context = context;
         }
 
-        public IEnumerable<User> GetUsers()
-        {
-            return _context.Users.ToList();
-        }
-
         public User GetUser(int id)
         {
             var user = _context.Users.SingleOrDefault(u => u.Id == id);
@@ -32,6 +26,9 @@ namespace PocketPharmacy.Persistence
 
         public void AddUser(User user)
         {
+            if (_context.Users.ToList().Exists(u => u.Username == user.Username))
+                throw new Exception("Létező felhasználónév.");
+
             _context.Users.Add(user);
         }
     }
