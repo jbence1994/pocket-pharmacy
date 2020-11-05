@@ -13,5 +13,6 @@ namespace PocketPharmacy.Resources
         public bool NeedPrescription { get; set; }
         public DosageResource Dosage { get; set; }
         public int Quantity { get; set; }
+        public DateTime LastUpdatedAt { get; set; }
     }
 }
