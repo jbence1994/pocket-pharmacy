@@ -48,7 +48,7 @@ namespace PocketPharmacy.Controllers
         // GET: api/medicines/5
         [HttpGet("{id}")]
         [Authorize]
-        public IActionResult GetMedicine([FromHeader] int userId, int id)
+        public IActionResult GetMedicine(int id, [FromHeader] int userId)
         {
             try
             {
@@ -62,6 +62,8 @@ namespace PocketPharmacy.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+        // ------- NEED TO REFACTOR --------------------------------------------------------
 
         // POST: api/medicines/
         [HttpPost]
@@ -117,16 +119,19 @@ namespace PocketPharmacy.Controllers
             }
         }
 
-        // DELETE: api/medicines/user=5/medicine=5
-        [HttpDelete("user={userId}/medicine={medicineId}")]
-        public IActionResult Delete(int medicineId)
+        // ------- NEED TO REFACTOR --------------------------------------------------------
+
+        // DELETE: api/medicines/5
+        [HttpDelete("{id}")]
+        [Authorize]
+        public IActionResult Delete(int id)
         {
             try
             {
-                _medicineRepository.DeleteMedicine(medicineId);
+                _medicineRepository.DeleteMedicine(id);
                 _unitOfWork.Complete();
 
-                return Ok(medicineId);
+                return Ok(id);
             }
             catch (Exception ex)
             {
