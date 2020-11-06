@@ -1,17 +1,17 @@
 ﻿using System;
+using PocketPharmacy.Controllers.Resources.Dosage;
 
-namespace PocketPharmacy.Controllers.Resources
+namespace PocketPharmacy.Controllers.Resources.Medicine
 {
-    public class GetMedicineResource
+    public class SaveMedicineResource
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public double Amount { get; set; }
         public string Unit { get; set; }
         public DateTime ExpirationDate { get; set; }
         public bool NeedPrescription { get; set; }
-        public DosageResource Dosage { get; set; }
+        public GetDosageResource Dosage { get; set; }
         public int Quantity { get; set; }
         public DateTime LastUpdatedAt { get; set; }
     }

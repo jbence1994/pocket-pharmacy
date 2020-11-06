@@ -3,7 +3,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using PocketPharmacy.Controllers.Resources;
+using PocketPharmacy.Controllers.Resources.User;
 using PocketPharmacy.Core;
 using PocketPharmacy.Core.Models;
 using PocketPharmacy.Core.Repositories;
@@ -29,22 +29,22 @@ namespace PocketPharmacy.Controllers
         // POST: api/users/register
         [HttpPost("register")]
         [AllowAnonymous]
-        public IActionResult Register([FromBody] SaveUserResource userResource)
+        public IActionResult Register([FromBody] RegisterOrLoginUserResource registerOrLoginUser)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var user = _mapper.Map<SaveUserResource, User>(userResource);
+                var user = _mapper.Map<RegisterOrLoginUserResource, User>(registerOrLoginUser);
                 _userRepository.AddUser(user);
 
                 _unitOfWork.Complete();
 
                 user = _userRepository.GetUser(user.Id);
-                var result = _mapper.Map<User, GetUserResource>(user);
+                var registeredUser = _mapper.Map<User, RegisteredUserResource>(user);
 
-                return Ok(result);
+                return Ok(registeredUser);
             }
             catch (Exception ex)
             {
@@ -55,15 +55,19 @@ namespace PocketPharmacy.Controllers
         // POST: api/users/login
         [HttpPost("login")]
         [AllowAnonymous]
-        public IActionResult Login([FromBody] LoginResource login)
+        public IActionResult Login([FromBody] RegisterOrLoginUserResource registerOrLoginUser)
         {
             try
             {
-                var token = _userRepository.Authenticate(login.Username, login.Password);
+                var token =
+                    _userRepository.Authenticate(registerOrLoginUser.Username, registerOrLoginUser.Password);
 
-                var user = _mapper.Map<User, GetUserResource>(_userRepository.GetUser(login.Username));
+                var user = _userRepository.GetUser(registerOrLoginUser.Username);
 
-                return Ok(new {token, user});
+                var authenticatedUser = _mapper.Map<User, AuthenticatedUserResource>(user);
+                authenticatedUser.Token = token;
+
+                return Ok(authenticatedUser);
             }
             catch (Exception ex)
             {

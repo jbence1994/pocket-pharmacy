@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
-using PocketPharmacy.Controllers.Resources;
+using PocketPharmacy.Controllers.Resources.Dosage;
+using PocketPharmacy.Controllers.Resources.Medicine;
+using PocketPharmacy.Controllers.Resources.User;
 using PocketPharmacy.Core.Models;
 
 namespace PocketPharmacy.Mapping
@@ -10,16 +12,16 @@ namespace PocketPharmacy.Mapping
         {
             // Domain model to API Resource
 
-            CreateMap<Dosage, DosageResource>();
+            CreateMap<Dosage, GetDosageResource>();
             CreateMap<Medicine, GetMedicineResource>();
-            CreateMap<User, GetUserResource>();
+            CreateMap<User, AuthenticatedUserResource>();
+            CreateMap<User, RegisteredUserResource>();
 
             // API Resource to Domain model
 
-            CreateMap<DosageResource, Dosage>();
+            CreateMap<GetDosageResource, Dosage>();
             CreateMap<SaveMedicineResource, Medicine>();
-            CreateMap<UpdateMedicineResource, Medicine>();
-            CreateMap<SaveUserResource, User>();
+            CreateMap<RegisterOrLoginUserResource, User>();
         }
     }
 }
