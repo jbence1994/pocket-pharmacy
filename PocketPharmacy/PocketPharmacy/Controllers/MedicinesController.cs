@@ -139,6 +139,14 @@ namespace PocketPharmacy.Controllers
             }
         }
 
+        // GET: api/medicines/5/getWeeklyDosage
+        [HttpGet("{id}/getWeeklyDosage")]
+        [Authorize]
+        public IActionResult GetWeeklyDosage(int id)
+        {
+            throw new NotImplementedException("Végpont fejlesztés alatt...");
+        }
+
         // GET: api/medicines/5/isExpired
         [HttpGet("{id}/isExpired")]
         [Authorize]
@@ -153,6 +161,14 @@ namespace PocketPharmacy.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        // GET: api/medicines/5/hasWeeklyDosage
+        [HttpGet("{id}/hasWeeklyDosage")]
+        [Authorize]
+        public IActionResult HasWeeklyDosage(int id)
+        {
+            throw new NotImplementedException("Végpont fejlesztés alatt...");
         }
     }
 }
