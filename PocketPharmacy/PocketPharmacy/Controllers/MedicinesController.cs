@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PocketPharmacy.Controllers.Resources;
@@ -26,9 +27,10 @@ namespace PocketPharmacy.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/medicines/user=5
-        [HttpGet("user={userId}")]
-        public IActionResult GetMedicines(int userId)
+        // GET: api/medicines/
+        [HttpGet]
+        [Authorize]
+        public IActionResult GetMedicines([FromHeader] int userId)
         {
             try
             {
