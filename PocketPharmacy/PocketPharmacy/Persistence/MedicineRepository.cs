@@ -23,13 +23,6 @@ namespace PocketPharmacy.Persistence
                 .Where(m => m.UserId == userId).ToList();
         }
 
-        private IEnumerable<Medicine> GetMedicines()
-        {
-            return _context.Medicines
-                .Include(m => m.Dosage)
-                .ToList();
-        }
-
         public Medicine GetMedicine(int userId, int medicineId)
         {
             var medicine = GetMedicines(userId)
@@ -43,7 +36,9 @@ namespace PocketPharmacy.Persistence
 
         public Medicine GetMedicine(int id)
         {
-            var medicine = GetMedicines().SingleOrDefault(m => m.Id == id);
+            var medicine = _context.Medicines
+                .Include(m => m.Dosage)
+                .SingleOrDefault(m => m.Id == id);
 
             if (medicine == null)
                 throw new Exception("Nem létező gyógyszer.");
