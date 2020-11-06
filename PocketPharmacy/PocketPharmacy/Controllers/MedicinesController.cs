@@ -67,7 +67,8 @@ namespace PocketPharmacy.Controllers
 
         // POST: api/medicines/
         [HttpPost]
-        public IActionResult Post([FromBody] SaveMedicineResource medicineResource)
+        [Authorize]
+        public IActionResult Post([FromHeader] int userId, [FromBody] SaveMedicineResource medicineResource)
         {
             try
             {
@@ -94,7 +95,8 @@ namespace PocketPharmacy.Controllers
 
         // PUT: api/medicines/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] UpdateMedicineResource medicineResource)
+        [Authorize]
+        public IActionResult Put(int id, [FromBody] SaveMedicineResource medicineResource)
         {
             try
             {
