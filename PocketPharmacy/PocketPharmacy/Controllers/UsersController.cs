@@ -29,14 +29,14 @@ namespace PocketPharmacy.Controllers
         // POST: api/users/register
         [HttpPost("register")]
         [AllowAnonymous]
-        public IActionResult Register([FromBody] RegisterOrLoginUserResource registerOrLoginUser)
+        public IActionResult Register([FromBody] RegisterOrAuthenticateUserResource registerOrAuthenticateUser)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var user = _mapper.Map<RegisterOrLoginUserResource, User>(registerOrLoginUser);
+                var user = _mapper.Map<RegisterOrAuthenticateUserResource, User>(registerOrAuthenticateUser);
                 _userRepository.AddUser(user);
 
                 _unitOfWork.Complete();
@@ -55,15 +55,16 @@ namespace PocketPharmacy.Controllers
         // POST: api/users/login
         [HttpPost("login")]
         [AllowAnonymous]
-        public IActionResult Login([FromBody] RegisterOrLoginUserResource registerOrLoginUser)
+        public IActionResult Login([FromBody] RegisterOrAuthenticateUserResource registerOrAuthenticateUser)
         {
             try
             {
-                var token =
-                    _userRepository.Authenticate(registerOrLoginUser.Username, registerOrLoginUser.Password);
+                var username = registerOrAuthenticateUser.Username;
+                var password = registerOrAuthenticateUser.Password;
 
-                var user = _userRepository.GetUser(registerOrLoginUser.Username);
+                var token = _userRepository.Authenticate(username, password);
 
+                var user = _userRepository.GetUser(username);
                 var authenticatedUser = _mapper.Map<User, AuthenticatedUserResource>(user);
                 authenticatedUser.Token = token;
 

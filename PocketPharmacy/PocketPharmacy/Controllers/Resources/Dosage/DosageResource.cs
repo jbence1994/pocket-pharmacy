@@ -1,6 +1,6 @@
 ﻿namespace PocketPharmacy.Controllers.Resources.Dosage
 {
-    public class GetDosageResource
+    public class DosageResource
     {
         public int PerDays { get; set; }
         public double Amount { get; set; }

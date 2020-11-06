@@ -1,6 +1,6 @@
 ﻿namespace PocketPharmacy.Controllers.Resources.User
 {
-    public class RegisterOrLoginUserResource
+    public class RegisterOrAuthenticateUserResource
     {
         public string Username { get; set; }
         public string Password { get; set; }
