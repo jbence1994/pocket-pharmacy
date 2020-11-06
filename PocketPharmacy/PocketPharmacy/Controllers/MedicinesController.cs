@@ -45,13 +45,14 @@ namespace PocketPharmacy.Controllers
             }
         }
 
-        // GET: api/medicines/user=5/medicine=5
-        [HttpGet("user={userId}/medicine={medicineId}")]
-        public IActionResult GetMedicine(int userId, int medicineId)
+        // GET: api/medicines/5
+        [HttpGet("{id}")]
+        [Authorize]
+        public IActionResult GetMedicine([FromHeader] int userId, int id)
         {
             try
             {
-                var medicine = _medicineRepository.GetMedicine(userId, medicineId);
+                var medicine = _medicineRepository.GetMedicine(userId, id);
                 var medicineResource = _mapper.Map<Medicine, GetMedicineResource>(medicine);
 
                 return Ok(medicineResource);
