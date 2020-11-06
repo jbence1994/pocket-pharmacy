@@ -141,6 +141,7 @@ namespace PocketPharmacy.Controllers
 
         // GET: api/medicines/5/isExpired
         [HttpGet("{id}/isExpired")]
+        [Authorize]
         public IActionResult IsExpiredMedicine(int id)
         {
             try

@@ -41,9 +41,9 @@ namespace PocketPharmacy.Persistence
             return medicine;
         }
 
-        public Medicine GetMedicine(int medicineId)
+        public Medicine GetMedicine(int id)
         {
-            var medicine = GetMedicines().SingleOrDefault(m => m.Id == medicineId);
+            var medicine = GetMedicines().SingleOrDefault(m => m.Id == id);
 
             if (medicine == null)
                 throw new Exception("Nem létező gyógyszer.");

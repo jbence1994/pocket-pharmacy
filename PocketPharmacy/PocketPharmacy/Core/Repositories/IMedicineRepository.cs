@@ -7,7 +7,7 @@ namespace PocketPharmacy.Core.Repositories
     {
         IEnumerable<Medicine> GetMedicines(int userId);
         Medicine GetMedicine(int userId, int medicineId);
-        Medicine GetMedicine(int medicineId);
+        Medicine GetMedicine(int id);
         void AddMedicine(Medicine medicine);
         void DeleteMedicine(int id);
         double GetWeeklyDosage(int id);
