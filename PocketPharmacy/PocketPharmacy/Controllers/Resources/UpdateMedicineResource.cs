@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace PocketPharmacy.Resources
+namespace PocketPharmacy.Controllers.Resources
 {
-    public class SaveMedicineResource
+    public class UpdateMedicineResource
     {
-        public int UserId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public double Amount { get; set; }

@@ -1,11 +1,12 @@
 ﻿using System;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using PocketPharmacy.Controllers.Resources;
 using PocketPharmacy.Core;
 using PocketPharmacy.Core.Models;
 using PocketPharmacy.Core.Repositories;
-using PocketPharmacy.Resources;
 
 namespace PocketPharmacy.Controllers
 {
@@ -25,9 +26,10 @@ namespace PocketPharmacy.Controllers
             _mapper = mapper;
         }
 
-        // POST: api/users
-        [HttpPost]
-        public IActionResult Post([FromBody] SaveUserResource userResource)
+        // POST: api/users/register
+        [HttpPost("register")]
+        [AllowAnonymous]
+        public IActionResult Register([FromBody] SaveUserResource userResource)
         {
             try
             {
@@ -47,6 +49,25 @@ namespace PocketPharmacy.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        // POST: api/users/login
+        [HttpPost("login")]
+        [AllowAnonymous]
+        public IActionResult Login([FromBody] LoginResource login)
+        {
+            try
+            {
+                var token = _userRepository.Authenticate(login.Username, login.Password);
+
+                var user = _mapper.Map<User, GetUserResource>(_userRepository.GetUser(login.Username));
+
+                return Ok(new {token, user});
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
             }
         }
     }

@@ -1,3 +1,5 @@
+using System;
+using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -5,7 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PocketPharmacy.Core.Repositories;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using PocketPharmacy.Core;
 using PocketPharmacy.Persistence;
 
@@ -34,7 +38,23 @@ namespace PocketPharmacy
             services.AddScoped<IMedicineRepository, MedicineRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
-            services.AddAuthentication();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Audience"],
+                        IssuerSigningKey =
+                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"])),
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
 
             services.AddAuthorization();
 
@@ -52,6 +72,8 @@ namespace PocketPharmacy
             app.UseRouting();
 
             app.UseCors(options => options.AllowAnyOrigin());
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

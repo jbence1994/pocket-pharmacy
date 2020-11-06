@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using PocketPharmacy.Controllers.Resources;
 using PocketPharmacy.Core;
 using PocketPharmacy.Core.Models;
 using PocketPharmacy.Core.Repositories;
-using PocketPharmacy.Resources;
 
 namespace PocketPharmacy.Controllers
 {
