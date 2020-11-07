@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -30,10 +32,13 @@ namespace PocketPharmacy.Controllers
 
         // GET: api/medicines/
         [HttpGet]
-        public IActionResult GetMedicines([FromHeader] int userId)
+        public IActionResult GetMedicines()
         {
             try
             {
+                var userId = Convert.ToInt32(HttpContext.User
+                    .FindFirst(ClaimTypes.NameIdentifier).Value);
+
                 var medicines = _medicineRepository.GetMedicines(userId);
                 var medicineResources = _mapper.Map<IEnumerable<Medicine>, IEnumerable<GetMedicineResource>>(medicines);
 
@@ -47,10 +52,13 @@ namespace PocketPharmacy.Controllers
 
         // GET: api/medicines/5
         [HttpGet("{id}")]
-        public IActionResult GetMedicine(int id, [FromHeader] int userId)
+        public IActionResult GetMedicine(int id)
         {
             try
             {
+                var userId = Convert.ToInt32(HttpContext.User
+                    .FindFirst(ClaimTypes.NameIdentifier).Value);
+
                 var medicine = _medicineRepository.GetMedicine(userId, id);
                 var medicineResource = _mapper.Map<Medicine, GetMedicineResource>(medicine);
 
