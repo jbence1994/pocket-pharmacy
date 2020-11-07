@@ -55,17 +55,26 @@ namespace PocketPharmacy.Persistence
                                                   u.Password == password))
                 throw new Exception("Hibás felhasználónév vagy jelszó!");
 
-            var credentials = new SigningCredentials(
-                key: new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"])),
-                algorithm: SecurityAlgorithms.HmacSha256Signature
-            );
+            var user = GetUser(username);
 
-            var token = new JwtSecurityToken(
+            var token = new JwtSecurityToken
+            (
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
-                claims: new[] {new Claim(ClaimTypes.Name, username)},
-                expires: DateTime.Now.AddHours(2),
-                signingCredentials: credentials
+                expires: DateTime.Now.AddHours(3),
+                claims: new[]
+                {
+                    new Claim(ClaimTypes.Name, user.Username),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                },
+                signingCredentials: new SigningCredentials
+                (
+                    key: new SymmetricSecurityKey
+                    (
+                        key: Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"])
+                    ),
+                    algorithm: SecurityAlgorithms.HmacSha256
+                )
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
