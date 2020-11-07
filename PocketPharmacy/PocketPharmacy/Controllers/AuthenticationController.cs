@@ -37,11 +37,11 @@ namespace PocketPharmacy.Controllers
                     return BadRequest(ModelState);
 
                 var user = _mapper.Map<RegisterOrAuthenticateUserResource, User>(registerOrAuthenticateUser);
-                _accountRepository.CreateAccount(user);
+                _accountRepository.AddUser(user);
 
                 _unitOfWork.Complete();
 
-                user = _accountRepository.GetAccount(user.Id);
+                user = _accountRepository.GetUser(user.Id);
                 var registeredUser = _mapper.Map<User, RegisteredUserResource>(user);
 
                 return Ok(registeredUser);
@@ -63,7 +63,7 @@ namespace PocketPharmacy.Controllers
 
                 var token = _accountRepository.Authenticate(username, password);
 
-                var user = _accountRepository.GetAccount(username);
+                var user = _accountRepository.GetUser(username);
                 var authenticatedUser = _mapper.Map<User, AuthenticatedUserResource>(user);
                 authenticatedUser.Token = token;
 
