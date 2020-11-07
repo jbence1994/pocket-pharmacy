@@ -13,22 +13,22 @@ namespace PocketPharmacy.Controllers
     [EnableCors("AllowOrigin")]
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    [AllowAnonymous]
+    public class AuthenticationController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserRepository _accountRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UsersController(IUserRepository userRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public AuthenticationController(IUserRepository accountRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _userRepository = userRepository;
+            _accountRepository = accountRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
         // POST: api/users/register
         [HttpPost("register")]
-        [AllowAnonymous]
         public IActionResult Register([FromBody] RegisterOrAuthenticateUserResource registerOrAuthenticateUser)
         {
             try
@@ -37,11 +37,11 @@ namespace PocketPharmacy.Controllers
                     return BadRequest(ModelState);
 
                 var user = _mapper.Map<RegisterOrAuthenticateUserResource, User>(registerOrAuthenticateUser);
-                _userRepository.AddUser(user);
+                _accountRepository.CreateAccount(user);
 
                 _unitOfWork.Complete();
 
-                user = _userRepository.GetUser(user.Id);
+                user = _accountRepository.GetAccount(user.Id);
                 var registeredUser = _mapper.Map<User, RegisteredUserResource>(user);
 
                 return Ok(registeredUser);
@@ -54,7 +54,6 @@ namespace PocketPharmacy.Controllers
 
         // POST: api/users/login
         [HttpPost("login")]
-        [AllowAnonymous]
         public IActionResult Login([FromBody] RegisterOrAuthenticateUserResource registerOrAuthenticateUser)
         {
             try
@@ -62,9 +61,9 @@ namespace PocketPharmacy.Controllers
                 var username = registerOrAuthenticateUser.Username;
                 var password = registerOrAuthenticateUser.Password;
 
-                var token = _userRepository.Authenticate(username, password);
+                var token = _accountRepository.Authenticate(username, password);
 
-                var user = _userRepository.GetUser(username);
+                var user = _accountRepository.GetAccount(username);
                 var authenticatedUser = _mapper.Map<User, AuthenticatedUserResource>(user);
                 authenticatedUser.Token = token;
 
