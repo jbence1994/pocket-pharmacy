@@ -51,8 +51,8 @@ namespace PocketPharmacy.Controllers
         }
 
         // GET: api/medicines/5
-        [HttpGet("{id}")]
-        public IActionResult GetMedicine(int id)
+        [HttpGet("{medicineId}")]
+        public IActionResult GetMedicine(int medicineId)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace PocketPharmacy.Controllers
                     HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
                 );
 
-                var medicine = _medicineRepository.GetMedicine(userId, id);
+                var medicine = _medicineRepository.GetMedicine(userId, medicineId);
                 var medicineResource = _mapper.Map<Medicine, GetMedicineResource>(medicine);
 
                 return Ok(medicineResource);
@@ -102,35 +102,9 @@ namespace PocketPharmacy.Controllers
             }
         }
 
-        // PUT: api/medicines/5
-        //[HttpPut("{id}")]
-        //public IActionResult UpdateMedicine(int id, [FromBody] SaveMedicineResource medicineResource)
-        //{
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //            return BadRequest(ModelState);
-
-        //        var medicine = _medicineRepository.GetMedicine(1, id);
-        //        //medicine.LastUpdatedAt = DateTime.Now;
-
-        //        //_mapper.Map(medicineResource, medicine);
-        //        //_unitOfWork.Complete();
-
-        //        //medicine = _medicineRepository.GetMedicine(medicine.Id);
-        //        var result = _mapper.Map<Medicine, GetMedicineResource>(medicine);
-
-        //        return Ok(result);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
-
-        // DELETE: api/medicines/5
-        [HttpDelete("{id}")]
-        public IActionResult DeleteMedicine(int id)
+        //PUT: api/medicines/5
+        [HttpPut("{medicineId}")]
+        public IActionResult UpdateMedicine(int medicineId, [FromBody] SaveMedicineResource medicineResource)
         {
             try
             {
@@ -138,10 +112,41 @@ namespace PocketPharmacy.Controllers
                     HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
                 );
 
-                _medicineRepository.DeleteMedicine(userId, id);
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var medicine = _medicineRepository.GetMedicine(userId, medicineId);
+                medicine.LastUpdatedAt = DateTime.Now;
+                medicine.UserId = userId;
+
+                _mapper.Map(medicineResource, medicine);
                 _unitOfWork.Complete();
 
-                return Ok(id);
+                medicine = _medicineRepository.GetMedicine(userId, medicine.Id);
+                var result = _mapper.Map<Medicine, GetMedicineResource>(medicine);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // DELETE: api/medicines/5
+        [HttpDelete("{medicineId}")]
+        public IActionResult DeleteMedicine(int medicineId)
+        {
+            try
+            {
+                var userId = Convert.ToInt32(
+                    HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
+                );
+
+                _medicineRepository.DeleteMedicine(userId, medicineId);
+                _unitOfWork.Complete();
+
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -150,9 +155,9 @@ namespace PocketPharmacy.Controllers
         }
 
         // GET: api/medicines/5/getWeeklyDosage
-        [HttpGet("{id}/getWeeklyDosage")]
+        [HttpGet("{medicineId}/getWeeklyDosage")]
         [Authorize]
-        public IActionResult GetWeeklyDosage(int id)
+        public IActionResult GetWeeklyDosage(int medicineId)
         {
             try
             {
@@ -160,7 +165,7 @@ namespace PocketPharmacy.Controllers
                     HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
                 );
 
-                var medicine = _medicineRepository.GetMedicine(userId, id);
+                var medicine = _medicineRepository.GetMedicine(userId, medicineId);
                 var weeklyDosage = medicine.GetWeeklyDosage();
 
                 return Ok(weeklyDosage);
@@ -172,8 +177,8 @@ namespace PocketPharmacy.Controllers
         }
 
         // GET: api/medicines/5/isExpired
-        [HttpGet("{id}/isExpired")]
-        public IActionResult IsExpiredMedicine(int id)
+        [HttpGet("{medicineId}/isExpired")]
+        public IActionResult IsExpiredMedicine(int medicineId)
         {
             try
             {
@@ -181,7 +186,7 @@ namespace PocketPharmacy.Controllers
                     HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
                 );
 
-                var medicine = _medicineRepository.GetMedicine(userId, id);
+                var medicine = _medicineRepository.GetMedicine(userId, medicineId);
                 var isExpiredMedicine = medicine.IsExpired();
 
                 return Ok(isExpiredMedicine);
@@ -193,8 +198,8 @@ namespace PocketPharmacy.Controllers
         }
 
         // GET: api/medicines/5/hasWeeklyDosage
-        [HttpGet("{id}/hasWeeklyDosage")]
-        public IActionResult HasWeeklyDosage(int id)
+        [HttpGet("{medicineId}/hasWeeklyDosage")]
+        public IActionResult HasWeeklyDosage(int medicineId)
         {
             try
             {
@@ -202,7 +207,7 @@ namespace PocketPharmacy.Controllers
                     HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
                 );
 
-                var medicine = _medicineRepository.GetMedicine(userId, id);
+                var medicine = _medicineRepository.GetMedicine(userId, medicineId);
                 var hasWeeklyDosage = medicine.HasWeeklyDosage();
 
                 return Ok(hasWeeklyDosage);
