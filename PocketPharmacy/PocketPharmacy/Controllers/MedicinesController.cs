@@ -71,25 +71,27 @@ namespace PocketPharmacy.Controllers
             }
         }
 
-        #region Under refactoring ...
-
         // POST: api/medicines/
         [HttpPost]
         public IActionResult AddMedicine([FromBody] SaveMedicineResource medicineResource)
         {
             try
             {
+                var userId = Convert.ToInt32(
+                    HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
+                );
+
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
                 var medicine = _mapper.Map<SaveMedicineResource, Medicine>(medicineResource);
-                //medicine.LastUpdatedAt = DateTime.Now;
+                medicine.LastUpdatedAt = DateTime.Now;
+                medicine.UserId = userId;
 
-                //_medicineRepository.AddMedicine(medicine);
+                _medicineRepository.AddMedicine(medicine);
+                _unitOfWork.Complete();
 
-                //_unitOfWork.Complete();
-
-                //medicine = _medicineRepository.GetMedicine(medicine.Id);
+                medicine = _medicineRepository.GetMedicine(userId, medicine.Id);
                 var result = _mapper.Map<Medicine, GetMedicineResource>(medicine);
 
                 return Ok(result);
@@ -101,33 +103,30 @@ namespace PocketPharmacy.Controllers
         }
 
         // PUT: api/medicines/5
-        [HttpPut("{id}")]
-        public IActionResult UpdateMedicine(int id, [FromBody] SaveMedicineResource medicineResource)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+        //[HttpPut("{id}")]
+        //public IActionResult UpdateMedicine(int id, [FromBody] SaveMedicineResource medicineResource)
+        //{
+        //    try
+        //    {
+        //        if (!ModelState.IsValid)
+        //            return BadRequest(ModelState);
 
-                var medicine = _medicineRepository.GetMedicine(1, id);
-                //medicine.LastUpdatedAt = DateTime.Now;
+        //        var medicine = _medicineRepository.GetMedicine(1, id);
+        //        //medicine.LastUpdatedAt = DateTime.Now;
 
-                //_mapper.Map(medicineResource, medicine);
+        //        //_mapper.Map(medicineResource, medicine);
+        //        //_unitOfWork.Complete();
 
-                //_unitOfWork.Complete();
+        //        //medicine = _medicineRepository.GetMedicine(medicine.Id);
+        //        var result = _mapper.Map<Medicine, GetMedicineResource>(medicine);
 
-                //medicine = _medicineRepository.GetMedicine(medicine.Id);
-                var result = _mapper.Map<Medicine, GetMedicineResource>(medicine);
-
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        #endregion
+        //        return Ok(result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
 
         // DELETE: api/medicines/5
         [HttpDelete("{id}")]
