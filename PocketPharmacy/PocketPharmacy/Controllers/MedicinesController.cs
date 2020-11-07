@@ -155,7 +155,21 @@ namespace PocketPharmacy.Controllers
         [Authorize]
         public IActionResult GetWeeklyDosage(int id)
         {
-            throw new NotImplementedException("Végpont fejlesztés alatt...");
+            try
+            {
+                var userId = Convert.ToInt32(
+                    HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
+                );
+
+                var medicine = _medicineRepository.GetMedicine(userId, id);
+                var weeklyDosage = medicine.GetWeeklyDosage();
+
+                return Ok(weeklyDosage);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // GET: api/medicines/5/isExpired
@@ -183,7 +197,21 @@ namespace PocketPharmacy.Controllers
         [HttpGet("{id}/hasWeeklyDosage")]
         public IActionResult HasWeeklyDosage(int id)
         {
-            throw new NotImplementedException("Végpont fejlesztés alatt...");
+            try
+            {
+                var userId = Convert.ToInt32(
+                    HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
+                );
+
+                var medicine = _medicineRepository.GetMedicine(userId, id);
+                var hasWeeklyDosage = medicine.HasWeeklyDosage();
+
+                return Ok(hasWeeklyDosage);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
