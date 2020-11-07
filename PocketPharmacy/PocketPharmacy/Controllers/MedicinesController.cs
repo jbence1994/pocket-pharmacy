@@ -14,6 +14,7 @@ namespace PocketPharmacy.Controllers
     [EnableCors("AllowOrigin")]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MedicinesController : ControllerBase
     {
         private readonly IMedicineRepository _medicineRepository;
@@ -29,7 +30,6 @@ namespace PocketPharmacy.Controllers
 
         // GET: api/medicines/
         [HttpGet]
-        [Authorize]
         public IActionResult GetMedicines([FromHeader] int userId)
         {
             try
@@ -47,7 +47,6 @@ namespace PocketPharmacy.Controllers
 
         // GET: api/medicines/5
         [HttpGet("{id}")]
-        [Authorize]
         public IActionResult GetMedicine(int id, [FromHeader] int userId)
         {
             try
@@ -67,7 +66,6 @@ namespace PocketPharmacy.Controllers
 
         // POST: api/medicines/
         [HttpPost]
-        [Authorize]
         public IActionResult Post([FromHeader] int userId, [FromBody] SaveMedicineResource medicineResource)
         {
             try
@@ -95,7 +93,6 @@ namespace PocketPharmacy.Controllers
 
         // PUT: api/medicines/5
         [HttpPut("{id}")]
-        [Authorize]
         public IActionResult Put(int id, [FromBody] SaveMedicineResource medicineResource)
         {
             try
@@ -125,7 +122,6 @@ namespace PocketPharmacy.Controllers
 
         // DELETE: api/medicines/5
         [HttpDelete("{id}")]
-        [Authorize]
         public IActionResult Delete(int id)
         {
             try
@@ -151,7 +147,6 @@ namespace PocketPharmacy.Controllers
 
         // GET: api/medicines/5/isExpired
         [HttpGet("{id}/isExpired")]
-        [Authorize]
         public IActionResult IsExpiredMedicine(int id)
         {
             try
@@ -167,7 +162,6 @@ namespace PocketPharmacy.Controllers
 
         // GET: api/medicines/5/hasWeeklyDosage
         [HttpGet("{id}/hasWeeklyDosage")]
-        [Authorize]
         public IActionResult HasWeeklyDosage(int id)
         {
             throw new NotImplementedException("Végpont fejlesztés alatt...");
