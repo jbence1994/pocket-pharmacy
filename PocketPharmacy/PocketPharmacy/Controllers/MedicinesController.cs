@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -36,8 +35,9 @@ namespace PocketPharmacy.Controllers
         {
             try
             {
-                var userId = Convert.ToInt32(HttpContext.User
-                    .FindFirst(ClaimTypes.NameIdentifier).Value);
+                var userId = Convert.ToInt32(
+                    HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
+                );
 
                 var medicines = _medicineRepository.GetMedicines(userId);
                 var medicineResources = _mapper.Map<IEnumerable<Medicine>, IEnumerable<GetMedicineResource>>(medicines);
@@ -56,8 +56,9 @@ namespace PocketPharmacy.Controllers
         {
             try
             {
-                var userId = Convert.ToInt32(HttpContext.User
-                    .FindFirst(ClaimTypes.NameIdentifier).Value);
+                var userId = Convert.ToInt32(
+                    HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
+                );
 
                 var medicine = _medicineRepository.GetMedicine(userId, id);
                 var medicineResource = _mapper.Map<Medicine, GetMedicineResource>(medicine);
@@ -70,11 +71,11 @@ namespace PocketPharmacy.Controllers
             }
         }
 
-        // ------- NEED TO REFACTOR --------------------------------------------------------
+        #region Under refactoring ...
 
         // POST: api/medicines/
         [HttpPost]
-        public IActionResult Post([FromHeader] int userId, [FromBody] SaveMedicineResource medicineResource)
+        public IActionResult AddMedicine([FromBody] SaveMedicineResource medicineResource)
         {
             try
             {
@@ -82,13 +83,13 @@ namespace PocketPharmacy.Controllers
                     return BadRequest(ModelState);
 
                 var medicine = _mapper.Map<SaveMedicineResource, Medicine>(medicineResource);
-                medicine.LastUpdatedAt = DateTime.Now;
+                //medicine.LastUpdatedAt = DateTime.Now;
 
-                _medicineRepository.AddMedicine(medicine);
+                //_medicineRepository.AddMedicine(medicine);
 
-                _unitOfWork.Complete();
+                //_unitOfWork.Complete();
 
-                medicine = _medicineRepository.GetMedicine(medicine.Id);
+                //medicine = _medicineRepository.GetMedicine(medicine.Id);
                 var result = _mapper.Map<Medicine, GetMedicineResource>(medicine);
 
                 return Ok(result);
@@ -101,21 +102,21 @@ namespace PocketPharmacy.Controllers
 
         // PUT: api/medicines/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] SaveMedicineResource medicineResource)
+        public IActionResult UpdateMedicine(int id, [FromBody] SaveMedicineResource medicineResource)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var medicine = _medicineRepository.GetMedicine(id);
-                medicine.LastUpdatedAt = DateTime.Now;
+                var medicine = _medicineRepository.GetMedicine(1, id);
+                //medicine.LastUpdatedAt = DateTime.Now;
 
-                _mapper.Map(medicineResource, medicine);
+                //_mapper.Map(medicineResource, medicine);
 
-                _unitOfWork.Complete();
+                //_unitOfWork.Complete();
 
-                medicine = _medicineRepository.GetMedicine(medicine.Id);
+                //medicine = _medicineRepository.GetMedicine(medicine.Id);
                 var result = _mapper.Map<Medicine, GetMedicineResource>(medicine);
 
                 return Ok(result);
@@ -126,15 +127,19 @@ namespace PocketPharmacy.Controllers
             }
         }
 
-        // ------- NEED TO REFACTOR --------------------------------------------------------
+        #endregion
 
         // DELETE: api/medicines/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult DeleteMedicine(int id)
         {
             try
             {
-                _medicineRepository.DeleteMedicine(id);
+                var userId = Convert.ToInt32(
+                    HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
+                );
+
+                _medicineRepository.DeleteMedicine(userId, id);
                 _unitOfWork.Complete();
 
                 return Ok(id);
@@ -159,7 +164,9 @@ namespace PocketPharmacy.Controllers
         {
             try
             {
-                var isExpiredMedicine = _medicineRepository.IsExpiredMedicine(id);
+                var isExpiredMedicine = _medicineRepository
+                    .GetMedicine(1, id).IsExpired();
+
                 return Ok(isExpiredMedicine);
             }
             catch (Exception ex)

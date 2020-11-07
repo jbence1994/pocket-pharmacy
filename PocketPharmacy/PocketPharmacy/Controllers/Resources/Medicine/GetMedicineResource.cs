@@ -12,8 +12,8 @@ namespace PocketPharmacy.Controllers.Resources.Medicine
         public string Unit { get; set; }
         public DateTime ExpirationDate { get; set; }
         public bool NeedPrescription { get; set; }
-        public DosageResource Dosage { get; set; }
         public int Quantity { get; set; }
+        public DosageResource Dosage { get; set; }
         public DateTime LastUpdatedAt { get; set; }
     }
 }

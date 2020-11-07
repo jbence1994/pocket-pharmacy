@@ -34,52 +34,16 @@ namespace PocketPharmacy.Persistence
             return medicine;
         }
 
-        public Medicine GetMedicine(int id)
-        {
-            var medicine = _context.Medicines
-                .Include(m => m.Dosage)
-                .SingleOrDefault(m => m.Id == id);
-
-            if (medicine == null)
-                throw new Exception("Nem létező gyógyszer.");
-
-            return medicine;
-        }
-
         public void AddMedicine(Medicine medicine)
         {
             _context.Medicines.Add(medicine);
         }
 
-        public void DeleteMedicine(int id)
+        public void DeleteMedicine(int userId, int id)
         {
-            var medicine = GetMedicine(id);
-
-            if (medicine == null)
-                throw new Exception("Nem létező gyógyszer.");
+            var medicine = GetMedicine(userId, id);
 
             _context.Medicines.Remove(medicine);
-        }
-
-        public double GetWeeklyDosage(int id)
-        {
-            var medicine = GetMedicine(id);
-
-            return medicine.GetWeeklyDosage();
-        }
-
-        public bool IsExpiredMedicine(int id)
-        {
-            var medicine = GetMedicine(id);
-
-            return medicine.IsExpired();
-        }
-
-        public bool HasWeeklyDosage(int id)
-        {
-            var medicine = GetMedicine(id);
-
-            return medicine.HasWeeklyDosage();
         }
     }
 }
