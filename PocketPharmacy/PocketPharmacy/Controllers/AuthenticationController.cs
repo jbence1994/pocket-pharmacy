@@ -27,7 +27,7 @@ namespace PocketPharmacy.Controllers
             _mapper = mapper;
         }
 
-        // POST: api/users/register
+        // POST: api/authentication/register
         [HttpPost("register")]
         public IActionResult Register([FromBody] RegisterOrAuthenticateUserResource registerOrAuthenticateUser)
         {
@@ -52,7 +52,7 @@ namespace PocketPharmacy.Controllers
             }
         }
 
-        // POST: api/users/login
+        // POST: api/authentication/login
         [HttpPost("login")]
         public IActionResult Login([FromBody] RegisterOrAuthenticateUserResource registerOrAuthenticateUser)
         {
