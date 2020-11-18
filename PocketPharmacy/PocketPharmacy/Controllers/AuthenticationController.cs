@@ -10,7 +10,7 @@ using PocketPharmacy.Core.Repositories;
 
 namespace PocketPharmacy.Controllers
 {
-    [EnableCors("AllowOrigin")]
+    [EnableCors("PocketPharmacyCorsPolicy")]
     [Route("api/[controller]")]
     [ApiController]
     [AllowAnonymous]
