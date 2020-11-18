@@ -17,6 +17,8 @@ namespace PocketPharmacy
 {
     public class Startup
     {
+        private const string CorsPolicy = "PocketPharmacyCorsPolicy";
+
         public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
@@ -27,7 +29,14 @@ namespace PocketPharmacy
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()); });
+            services.AddCors(options =>
+            {
+                options.AddPolicy(CorsPolicy, builder =>
+                {
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyOrigin();
+                });
+            });
 
             services.AddDbContext<ApplicationDbContext>(options => options
                 .UseMySQL(Configuration.GetConnectionString("Default")));
@@ -76,7 +85,7 @@ namespace PocketPharmacy
 
             app.UseRouting();
 
-            app.UseCors(options => options.AllowAnyOrigin());
+            app.UseCors(CorsPolicy);
 
             app.UseAuthentication();
 
