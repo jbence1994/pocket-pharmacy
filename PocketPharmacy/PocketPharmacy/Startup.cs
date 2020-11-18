@@ -16,7 +16,7 @@ namespace PocketPharmacy
 {
     public class Startup
     {
-        private const string CorsPolicy = "PocketPharmacyCorsPolicy";
+        private const string DefaultCorsPolicy = "DefaultCorsPolicy";
 
         public IConfiguration Configuration { get; }
 
@@ -30,7 +30,7 @@ namespace PocketPharmacy
         {
             services.AddCors(options =>
             {
-                options.AddPolicy(CorsPolicy, builder =>
+                options.AddPolicy(DefaultCorsPolicy, builder =>
                 {
                     builder.AllowAnyHeader();
                     builder.AllowAnyOrigin();
@@ -84,7 +84,7 @@ namespace PocketPharmacy
 
             app.UseRouting();
 
-            app.UseCors(CorsPolicy);
+            app.UseCors(DefaultCorsPolicy);
 
             app.UseAuthentication();
 
