@@ -34,6 +34,7 @@ namespace PocketPharmacy
                 {
                     builder.AllowAnyHeader();
                     builder.AllowAnyOrigin();
+                    builder.WithMethods("POST", "GET", "DELETE", "PUT");
                 });
             });
 
