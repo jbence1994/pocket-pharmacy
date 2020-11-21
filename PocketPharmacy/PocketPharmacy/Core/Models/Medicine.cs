@@ -19,7 +19,9 @@ namespace PocketPharmacy.Core.Models
 
         public double GetWeeklyDosage()
         {
-            return 0;
+            const int numberOfDays = 7;
+
+            return Dosage.Amount * Dosage.PerDay * numberOfDays;
         }
 
         public bool IsExpired()
@@ -29,7 +31,11 @@ namespace PocketPharmacy.Core.Models
 
         public bool HasWeeklyDosage()
         {
-            return false;
+            var totalAmount = Amount * Quantity;
+
+            var weeklyDosage = GetWeeklyDosage();
+
+            return totalAmount >= weeklyDosage;
         }
     }
 }
