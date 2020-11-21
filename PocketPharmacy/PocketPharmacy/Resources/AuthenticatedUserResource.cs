@@ -1,4 +1,4 @@
-﻿namespace PocketPharmacy.Controllers.Resources.User
+﻿namespace PocketPharmacy.Resources
 {
     public class AuthenticatedUserResource
     {

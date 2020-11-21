@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using PocketPharmacy.Controllers.Resources.Dosage;
-using PocketPharmacy.Controllers.Resources.Medicine;
-using PocketPharmacy.Controllers.Resources.User;
 using PocketPharmacy.Core.Models;
+using PocketPharmacy.Resources;
 
 namespace PocketPharmacy.Mapping
 {

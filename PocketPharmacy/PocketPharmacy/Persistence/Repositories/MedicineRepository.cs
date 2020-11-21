@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using PocketPharmacy.Core.Models;
 using PocketPharmacy.Core.Repositories;
 
-namespace PocketPharmacy.Persistence
+namespace PocketPharmacy.Persistence.Repositories
 {
     public class MedicineRepository : IMedicineRepository
     {

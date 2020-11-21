@@ -1,7 +1,6 @@
 ﻿using System;
-using PocketPharmacy.Controllers.Resources.Dosage;
 
-namespace PocketPharmacy.Controllers.Resources.Medicine
+namespace PocketPharmacy.Resources
 {
     public class GetMedicineResource
     {

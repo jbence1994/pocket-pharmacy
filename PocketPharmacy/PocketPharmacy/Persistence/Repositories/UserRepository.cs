@@ -1,14 +1,14 @@
 ﻿using System;
-using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using PocketPharmacy.Core.Models;
 using PocketPharmacy.Core.Repositories;
 
-namespace PocketPharmacy.Persistence
+namespace PocketPharmacy.Persistence.Repositories
 {
     public class UserRepository : IUserRepository
     {
